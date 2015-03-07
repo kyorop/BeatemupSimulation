@@ -1,24 +1,10 @@
 #include "PLAYER.h"
 #include"DxLib.h"
 
-double PLAYER::GetPosX()
-{
-	return X;
-}
-
-double PLAYER::GetPosY()
-{
-	return Y;
-}
-
-int PLAYER::GetHeight()
-{
-	return HEIGHT;
-}
-int PLAYER::GetWidht()
-{
-	return WIDHT;
-}
+//double PLAYER::GetPosX(){	return X;}
+//double PLAYER::GetPosY(){	return Y;}
+//int PLAYER::GetHeight(){	return HEIGHT;}
+//int PLAYER::GetWidht(){	return WIDHT;}
 
 void PLAYER::PlayerIni()
 {

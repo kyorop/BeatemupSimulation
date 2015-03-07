@@ -15,15 +15,14 @@ private:
 	bool OnGround;
 	
 public:
-	double GetPosX();
-	double GetPosY();
-	int GetHeight();
-	int GetWidht();
-	void PlayerMove();
+	double GetPosX(){ return X; }
+	double GetPosY(){ return Y; }
+	int GetHeight(){ return HEIGHT; }
+	int GetWidht(){ return WIDHT; }
 	void PlayerIni();
 	void PlayerDraw();
 	void GraphNumChange();
-	void DoJump();
+	void PlayerMove();
 };
 
 #endif

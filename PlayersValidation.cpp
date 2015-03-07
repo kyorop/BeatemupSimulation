@@ -1,32 +1,17 @@
 #include "PlayersValidation.h"
 #include "DxLib.h"
 
-void PlayersValidation::Validation()
+void PlayersValidation::Validation(PLAYER *player)
 {
-	PLAYER player;
-	player.PlayerIni();
-
-	
-	while (true)
-	{
-		double playerY = player.GetPosY();
-
-
-		ClearDrawScreen();
-		DrawBox(0, 0, 640, 400, GetColor(255, 255, 255), TRUE);
-		DrawString(0, 0, "PLAYERSVALIDATION", GetColor(0, 0, 0));
-		DrawFormatString(0, 16, GetColor(0, 0, 0), "Y座標：%lf",&playerY);
-		player.PlayerMove();
-		player.GraphNumChange();
-		player.PlayerDraw();
-
-
-		ScreenFlip();
-
-		if (ProcessMessage() == -1)
-			break;
-	}
-
+	/*double* playerY = player->GetPosY();*/
+	DrawString(0, 16, "PLAYERSVALIDATION", GetColor(0, 0, 0));
+	DrawString(0, 0, "Wキーを押すと動作確認を終了", GetColor(0, 0, 0));
+	/*DrawFormatString(0, 16, GetColor(0, 0, 0), "Y座標：%lf", &playerY);
+*/
+	if (CheckHitKey(KEY_INPUT_W)){ ValidationEnd(); }
+	player->PlayerMove();
+	player->GraphNumChange();
+	player->PlayerDraw();
 }
 
 
