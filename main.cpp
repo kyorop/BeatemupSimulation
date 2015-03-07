@@ -17,15 +17,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bool PlayMode=false;
 	PLAYER Pl;
 	Pl.PlayerIni(50.0,50.0);
-<<<<<<< HEAD
+
 	/*Pl.Vx = 3.0;*/
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
-=======
 	Pl.Vx = 2.0;
 	
 	int Time = 60;
-
->>>>>>> fe4dab43c341a28746e29d5adf0b870caf886d77
 	while (1)
 	{
 
