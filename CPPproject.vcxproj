@@ -89,20 +89,26 @@
     <ClCompile Include="HemiSphere.cpp" />
     <ClCompile Include="Hole.cpp" />
     <ClCompile Include="main.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Object_Interface.cpp" />
+=======
+>>>>>>> fe4dab43c341a28746e29d5adf0b870caf886d77
     <ClCompile Include="PLAYER.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="HemiSphere.h" />
     <ClInclude Include="Hole.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Object_Interface.h" />
+=======
+>>>>>>> fe4dab43c341a28746e29d5adf0b870caf886d77
     <ClInclude Include="PLAYER.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Square.h" />
