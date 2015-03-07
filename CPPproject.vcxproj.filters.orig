@@ -25,8 +25,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
 <<<<<<< HEAD
-    <ClCompile Include="PlayersValidation.cpp">
-=======
     <ClCompile Include="Scene_Base.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -43,6 +41,14 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene_Mapcreate.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+=======
+<<<<<<< HEAD
+    <ClCompile Include="Object_Interface.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Square.cpp">
@@ -63,23 +69,15 @@
     <ClCompile Include="Map.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Object_Interface.cpp">
->>>>>>> 38dd6564333ef12ae7b4fa9c51421cb5ef24c591
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
+=======
+>>>>>>> fe4dab43c341a28746e29d5adf0b870caf886d77
+>>>>>>> 533afb99621b8ecda024060c6a7da528e6932c53
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PLAYER.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
 <<<<<<< HEAD
-    <ClInclude Include="PlayersValidation.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-=======
     <ClInclude Include="Scene_Base.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -101,6 +99,8 @@
     <ClInclude Include="Scene_Mapcreate.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+=======
+<<<<<<< HEAD
     <ClInclude Include="Object_Interface.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -125,9 +125,8 @@
     <ClInclude Include="Map.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include=".gitignore" />
->>>>>>> 38dd6564333ef12ae7b4fa9c51421cb5ef24c591
+=======
+>>>>>>> fe4dab43c341a28746e29d5adf0b870caf886d77
+>>>>>>> 533afb99621b8ecda024060c6a7da528e6932c53
   </ItemGroup>
 </Project>
