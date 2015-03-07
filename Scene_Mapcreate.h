@@ -18,6 +18,6 @@ private:
 	int numobjects[TRIANGLE + 1];
 	int numobjects_now[TRIANGLE + 1]; //各オブジェクトの残り
 	int object_size[TRIANGLE + 1]; //各オブジェクトの1辺の大きさ
-
+	int h_banner;
 	
 };
