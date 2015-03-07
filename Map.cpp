@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "CollisionHelper.h"
 
 Map* Map::instance;
 
@@ -246,11 +247,14 @@ int Map::CreateUpdate()
 	}
 	else if (m_mouse_updown) //離された時の処理
 	{
-		SetDraggedObject(static_cast<KindObject>(nowchoose / 10), nowchoose - (nowchoose / 10) * 10);
+		const KindObject droppedType = static_cast<KindObject>(nowchoose / 10);
+		const int droppedI = nowchoose - (nowchoose / 10) * 10;
+		SetDraggedObject(droppedType, droppedI);
+		GetObj(droppedType, droppedI)->PutOnGround();
 		m_mouse_updown = FALSE;
 		nowchoose = -1;
 	}
-	if (mouse_y < 308) //アイテムボックスの中でない
+	if (mouse_y < small_stage_size_y) //アイテムボックスの中でない
 	{
 		result = -1;
 	}
@@ -260,38 +264,82 @@ int Map::CreateUpdate()
 
 void Map::SetDraggedObject(KindObject type, int i)
 {
-	//	if (nanimonai)
+	const int x1 = GetObj(type, i)->GetDrawPosX();
+	const int x2 = x1 + GetObj(type, i)->GetDrawSizeWidth();
+	const int lowerY = GetObj(type, i)->GetDrawPosY() + GetObj(type, i)->GetDrawSizeHigh();
+	const int highestY = GetHighestY(x1, x2, lowerY);
+	Object* object = nullptr;
+
+	if (highestY >= small_stage_size_y)
 	{
-		Object* object = nullptr;
-		switch (type)
-		{
-		case SQUARE:
-			object = &m_square[i];
-			break;
-		case HEMISPHERE:
-			object = &m_hemisphere[i];
-			break;
-		case SPRING: 
-			object = &m_spring[i];
-			break;
-		case HOLE: 
-			object = &m_hole[i];
-			break;
-		case TRIANGLE: 
-			object = &m_triangle[i];
-			break;
-		default:
-			break;
-		}
+		object = GetObj(type, i); 
 		if (object != nullptr)
 		{
 			const int height = object->GetDrawSizeHigh();
 			object->SetDrawPosY(small_stage_size_y - height);
 		}
 	}
-	//	else
+	else
 	{
+		object = GetObj(type, i);
+		if (object != nullptr)
+		{
+			const int height = object->GetDrawSizeHigh();
+			object->SetDrawPosY(highestY - height);
+			object->PutOnGround();
+		}
+	}
+}
 
+int Map::GetHighestY(int x1, int x2, int lowerY)
+{
+	int highestY=small_stage_size_y;
+
+	for (int i = 0; i < m_numobjects[SQUARE]; i++)
+	{
+		if (m_square[i].IsSet())
+		{
+			const int doneX1 = m_square[i].GetDrawPosX();
+			const int doneX2 = doneX1 + m_square[i].GetDrawSizeWidth();
+			const int doneUpperY = m_square[i].GetDrawPosY();
+			if (CheckHitLine(x1, x2, doneX1, doneX2))
+			{
+				if (highestY > doneUpperY)
+					highestY = doneUpperY;
+			}
+		}
+	}
+	for (int i = 0; i < m_numobjects[HEMISPHERE]; i++)
+	{
+	}
+	for (int i = 0; i < m_numobjects[SPRING]; i++)
+	{
+	}
+	for (int i = 0; i < m_numobjects[HOLE]; i++)
+	{
+	}
+	for (int i = 0; i < m_numobjects[TRIANGLE]; i++)
+	{
 	}
 
+	return highestY;
+}
+
+Object* Map::GetObj(KindObject type, const int i)
+{
+	switch (type)
+	{
+	case SQUARE: 
+		return &m_square[i];
+	case HEMISPHERE: 
+		return &m_hemisphere[i];
+	case SPRING: 
+		return &m_spring[i];
+	case HOLE:
+		return &m_hole[i];
+	case TRIANGLE: 
+		return &m_triangle[i];
+	default: 
+		return nullptr;
+	}
 }

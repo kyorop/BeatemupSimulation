@@ -18,6 +18,7 @@
     <ClCompile Include="Scene_Gameover.cpp" />
     <ClCompile Include="Scene_Mapcreate.cpp" />
     <ClCompile Include="Scene_Start.cpp" />
+    <ClCompile Include="CollisionHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISceneChanger.h" />
@@ -37,5 +38,6 @@
     <ClInclude Include="Scene_Gameover.h" />
     <ClInclude Include="Scene_Mapcreate.h" />
     <ClInclude Include="Scene_Start.h" />
+    <ClInclude Include="CollisionHelper.h" />
   </ItemGroup>
 </Project>
