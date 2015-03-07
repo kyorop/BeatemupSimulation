@@ -249,5 +249,9 @@ int Map::CreateUpdate()
 		nowchoose = -1;
 		m_mouse_updown = FALSE;
 	}
+	if (mouse_y < 308) //アイテムボックスの中でない
+	{
+		result = -1;
+	}
 	return result;
 }
