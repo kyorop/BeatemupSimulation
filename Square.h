@@ -9,6 +9,5 @@ class Square :
 public:
 	Square();
 	~Square();
-	
 };
 

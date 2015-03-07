@@ -6,6 +6,8 @@ class Triangle :
 	public Object
 {
 public:
+	void Draw() override;
+public:
 	Triangle();
 	~Triangle();
 };

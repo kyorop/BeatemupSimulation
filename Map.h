@@ -47,4 +47,3 @@ private:
 	Map(const Map& rhs);
 	Map& operator=(const Map& rhs);
 };
-
