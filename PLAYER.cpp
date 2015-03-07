@@ -13,6 +13,7 @@ void PLAYER::PlayerIni()
 {
 	X = 0;	Y = 352;
 	AddX = 1; AddY = 0; dropAddY=0.1;
+	MaxY = Y;
 	GraphNum = 1;
 	GraphChangeTime_Max = 80;
 	TimeMax = 20;
@@ -53,16 +54,17 @@ void PLAYER::GraphNumChange()
 void PLAYER::PlayerMove()
 {
 	X += AddX; Y += AddY;
+	if (Y < MaxY)MaxY = Y;
+
 	if (OnGround==false)
 	{
 		AddY += dropAddY;
 	}
 	
-	
-	if (Y >= 400 - HEIGHT)
+	/*if (Y >= 400 - HEIGHT)
 	{
 		OnGround = true;
-		if (AddY <= 0)
+		if (AddY >= 0)
 		{
 			AddY = 0;
 		}
@@ -71,17 +73,18 @@ void PLAYER::PlayerMove()
 	else
 	{
 		OnGround = false;
-	}
+	}*/
 }
 
 void PLAYER::DoJump()
 {
 	for (int r = 0; r < map->GetNumObject(SQUARE); r++)
 	{
-		int height = map->m_square[r].GetSizeHigh() + GetHeight();
-		int widht = map->m_square[r].GetPosX() - GetPosX();
-		if (widht <= AddX*sqrt(2 * (height) / dropAddY) && OnGround&&widht>0)
+		int height = map->m_square[r].GetSizeHigh();
+		int widht = map->m_square[r].GetPosX() - (int)GetPosX();
+		if (widht <= AddX*sqrt(2 * (height) / dropAddY)+GetWidht() && OnGround&&widht>GetWidht())
 		{
+			AddY = 0;
 			AddY -= sqrt(2 * dropAddY*(height));
 		}
 	}
@@ -118,4 +121,47 @@ void PLAYER::DoJump_a()
 			AddY -= 6;
 		}
 	}
+}
+
+bool PLAYER::GetOnGround()
+{
+
+	for (int r = 0; r < map->GetNumObject(SQUARE); r++)
+	{
+		int height = map->m_square[r].GetPosY()-(Y+HEIGHT);
+		//オブジェクトの上底の高さとキャラクター画像の底辺の高さの差
+		//負であればキャラクター画像の底辺はオブジェクトの上底よりも下に表示されている
+		int widht1 = map->m_square[r].GetPosX() - (X+WIDHT);
+		//オブジェクトの左端とキャラクター画像の右端のX座標の差
+		//負であればキャラクター画像の右端はオブジェクトの左端よりも右に表示されている
+		int widht2 = map->m_square[r].GetPosX() + map->m_square[r].GetSizeWidth()-X;
+		//オブジェクトの右端とキャラクター画像の左端のX座標の差
+		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
+		if (widht1 <0 &&widht2>0&&height<=0)
+		{
+			DrawString(400, 50, "TRUE", GetColor(0, 0, 0));
+			if (AddY>0)
+			AddY = 0;
+			OnGround = true;
+			return OnGround;
+		}
+		else
+		{
+			OnGround = false;
+		}
+	}
+	if (Y >= 400 - HEIGHT)
+	{
+		OnGround = true;
+		if (AddY >= 0)
+		{
+			AddY = 0;
+		}
+		Y = 400 - HEIGHT;
+	}
+	else
+	{
+		OnGround = false;
+	}
+	return OnGround;
 }
