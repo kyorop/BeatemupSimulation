@@ -14,11 +14,11 @@ void PLAYER::RenewPlayersSpeed()
 	Vx += Ax;
 	Vy += Ay;
 
-	if (Vy > 8)
+	if (Vy >= 8)
 	{
 		Vy = 8;
 	}
-	if (Y > 400)
+	if (Y >= 400-YSize/2)
 	{
 		Vy = 0;
 	}

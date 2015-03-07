@@ -1,5 +1,4 @@
 #include"DxLib.h"
-#include"OBJECT.h"
 #include"PLAYER.h"
 
 #define GRAVITY 1
@@ -16,8 +15,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bool PlayMode=false;
 	PLAYER Pl;
 	Pl.PlayerIni(50.0,50.0);
-	/*Pl.Vx = 3.0;*/
-	OBJECT Obj[4];
+	Pl.Vx = 2.0;
+	
+	int Time = 60;
+
 	while (1)
 	{
 
@@ -29,9 +30,25 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		Pl.AddForce(0.0, GRAVITY*Pl.Mass);
 		if (Pl.Y >= 400-Pl.YSize/2)
 		{
-			Pl.AddForce(0.0, -GRAVITY* Pl.Mass);
+			Pl.OnGround = true;
 		}
-
+		else
+		{
+			Pl.OnGround = false;
+		}
+		if (Pl.OnGround)
+		{
+			Pl.AddForce(0.0, -GRAVITY* Pl.Mass);
+			if (Time > 0)
+			{
+				Time--;
+			}
+			else
+			{
+				Time = 60;
+				Pl.AddForce(0.0, -1000 * Pl.Mass);
+			}
+		}
 		Pl.RenewPlayersAccel();
 		Pl.RenewPlayersSpeed();
 		Pl.RenewPlayersPoint();
