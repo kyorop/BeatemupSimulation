@@ -86,13 +86,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HemiSphere.cpp" />
+    <ClCompile Include="Hole.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="OBJECT.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Object_Interface.cpp" />
     <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="Spring.cpp" />
+    <ClCompile Include="Square.cpp" />
+    <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OBJECT.h" />
+    <ClInclude Include="HemiSphere.h" />
+    <ClInclude Include="Hole.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Object_Interface.h" />
     <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="Spring.h" />
+    <ClInclude Include="Square.h" />
+    <ClInclude Include="Triangle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

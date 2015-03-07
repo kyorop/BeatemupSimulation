@@ -1,6 +1,7 @@
+#pragma once
 #include"DxLib.h"
-#include"OBJECT.h"
 #include"PLAYER.h"
+#include"Map.h"
 
 #define GRAVITY 1
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -17,7 +18,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	PLAYER Pl;
 	Pl.PlayerIni(50.0,50.0);
 	/*Pl.Vx = 3.0;*/
-	OBJECT Obj[4];
+	Map* map = Map::GetInstance(); //マップオブジェクトの生成
 	while (1)
 	{
 
@@ -40,7 +41,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		DrawFormatString(0, 0, GetColor(0,0,0), "速度(Y軸)：%lf", Pl.Vy);
 		DrawFormatString(0, 16, GetColor(0,0,0), "加速度(Y軸)：%lf", Pl.Ay);
 		DrawFormatString(0, 32, GetColor(0,0,0), "力(Y軸)：%lf", Pl.Fy);
-		DrawFormatString(0, 48, GetColor(0,0,0), "Y座標：%lf", Pl.Y);
+		DrawFormatString(0, 48, GetColor(0, 0, 0), "Y座標：%lf", Pl.Y);
+		DrawFormatString(0, 64, GetColor(0, 128, 0), "test：%d", map->GetNumObject(SPRING)); //使い方の例
 		ScreenFlip();
 
 		if (ProcessMessage() == -1)
