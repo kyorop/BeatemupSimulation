@@ -74,7 +74,25 @@ void Object::ReminSize(int size_x, int size_y)
 }
 
 
-void Object::RemaxSize(int size_x, int size_y)
+void Object::RemaxSize()
 {
-
+	//å≥ÇÃç¿ïWÇ…ñﬂÇ∑
+	SetDrawPosX(m_pos_x);
+	SetDrawPosY(m_pos_y);
+	/*switch (m_kindobject)
+	{
+	case SQUARE:
+		SetDrawPosX(10);
+		break;
+	case HEMISPHERE:
+		break;
+	case SPRING:
+		break;
+	case HOLE:
+		break;
+	case TRIANGLE:
+		break;
+	default:
+		break;
+	}*/
 }

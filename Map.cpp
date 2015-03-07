@@ -257,6 +257,27 @@ int Map::CreateUpdate()
 		}
 		else
 		{
+			switch (nowchoose / 10) //ç¿ïWÇñﬂÇ∑
+			{
+			case SQUARE:
+				m_square[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			case HEMISPHERE:
+				m_hemisphere[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			case SPRING:
+				m_spring[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			case HOLE:
+				m_hole[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			case TRIANGLE:
+				m_triangle[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			default:
+				break;
+			}
+
 			result = nowchoose * (-10) - 10; //ì¡éÍÇ»èàóù
 		}
 		nowchoose = -1;
