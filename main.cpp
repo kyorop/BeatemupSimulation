@@ -17,6 +17,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bool PlayMode=false;
 	PLAYER Pl;
 	Pl.PlayerIni(50.0,50.0);
+	bool mouse_flag = false;
+	bool mouse_last_flag = false;
 
 	/*Pl.Vx = 3.0;*/
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
@@ -53,6 +55,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				Pl.AddForce(0.0, -1000 * Pl.Mass);
 			}
 		}
+		mouse_flag = GetMouseInput() & MOUSE_INPUT_LEFT;
+		if (mouse_flag && !mouse_last_flag)
+		{
+			map->MakeObject(SPRING, 10, 10, 10, 10);
+			mouse_last_flag = TRUE;
+		}
+		if (!mouse_flag && mouse_last_flag)
+		{
+			mouse_last_flag = FALSE;
+		}
+
 		Pl.RenewPlayersAccel();
 		Pl.RenewPlayersSpeed();
 		Pl.RenewPlayersPoint();
@@ -63,6 +76,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		DrawFormatString(0, 32, GetColor(0,0,0), "力(Y軸)：%lf", Pl.Fy);
 		DrawFormatString(0, 48, GetColor(0, 0, 0), "Y座標：%lf", Pl.Y);
 		DrawFormatString(0, 64, GetColor(0, 128, 0), "test：%d", map->GetNumObject(SPRING)); //使い方の例
+		if (map->GetNumObject(SPRING) >= 2)
+		{
+			DrawFormatString(0, 80, GetColor(0, 128, 0), "test2：%d", map -> m_spring[1].GetPosX()); //使い方の例
+		}
+		
+		
 		ScreenFlip();
 
 		if (ProcessMessage() == -1)
