@@ -93,6 +93,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Object_Interface.cpp" />
     <ClCompile Include="PLAYER.cpp" />
+<ClCompile Include="PlayersValidation.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Object_Interface.h" />
     <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="PlayersValidation.h" />
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Triangle.h" />

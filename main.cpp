@@ -1,9 +1,13 @@
 #pragma once
 #include"DxLib.h"
+
 #include"PLAYER.h"
+#include"PlayersValidation.h"
+
 #include"Map.h"
 
-#define GRAVITY 1
+
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 
@@ -13,42 +17,39 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return -1;
 	SetGraphMode(640, 480, 16);
 	SetDrawScreen(DX_SCREEN_BACK);
+<<<<<<< HEAD
 	SetMouseDispFlag(TRUE);//マウスポインタをゲームウィンドウに表示する
 	bool PlayMode=false;
 	PLAYER Pl;
 	Pl.PlayerIni(50.0,50.0);
 	bool mouse_flag = false;
 	bool mouse_last_flag = false;
+=======
+>>>>>>> c1d0fff4cb35607b18299ae03d0a03f6622accc8
 
-	/*Pl.Vx = 3.0;*/
+	SetMouseDispFlag(TRUE);//マウスポインタをゲームウィンドウに表示する	
+	PLAYER player;//プレイヤークラスの宣言
+	PlayersValidation validation;//動作確認のクラスの宣言
+	validation.ValidationIni();
+
+
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
-	Pl.Vx = 2.0;
-	
-	int Time = 60;
 	while (1)
 	{
 
 		ClearDrawScreen();
 		DrawBox(0, 0, 640, 400,GetColor(255,255,255),TRUE);
-		Pl.Frt();
-		Pl.RenewGraphNum();
-		Pl.PlayerDraw();
-		Pl.AddForce(0.0, GRAVITY*Pl.Mass);
-		if (Pl.Y >= 400-Pl.YSize/2)
+		if (CheckHitKey(KEY_INPUT_Q))
 		{
-			Pl.OnGround = true;
+			validation.ValidationStart();
+			player.PlayerIni();//プレイヤーの初期化
 		}
+		if (validation.ValidationPlay()){ validation.Validation(&player); }
 		else
 		{
-			Pl.OnGround = false;
+			DrawString(0, 0, "Qキーを押すとPlayerの動作確認", GetColor(0, 0, 0));
 		}
-		if (Pl.OnGround)
-		{
-			Pl.AddForce(0.0, -GRAVITY* Pl.Mass);
-			if (Time > 0)
-			{
-				Time--;
-		}
+<<<<<<< HEAD
 			else
 			{
 				Time = 60;
@@ -82,6 +83,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 		
 		
+=======
+
+		
+
+>>>>>>> c1d0fff4cb35607b18299ae03d0a03f6622accc8
 		ScreenFlip();
 
 		if (ProcessMessage() == -1)

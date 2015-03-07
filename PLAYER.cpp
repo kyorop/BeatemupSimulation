@@ -1,78 +1,74 @@
 #include "PLAYER.h"
 #include"DxLib.h"
 
-void PLAYER::RenewPlayersPoint()
+//double PLAYER::GetPosX(){	return X;}
+//double PLAYER::GetPosY(){	return Y;}
+//int PLAYER::GetHeight(){	return HEIGHT;}
+//int PLAYER::GetWidht(){	return WIDHT;}
+
+void PLAYER::PlayerIni()
 {
-	X += Vx;
-	Y += Vy;
-	if (Y > 400 - YSize / 2)Y = 400 - YSize / 2;
-}
-
-
-void PLAYER::RenewPlayersSpeed()
-{
-	Vx += Ax;
-	Vy += Ay;
-
-	if (Vy >= 8)
-	{
-		Vy = 8;
-	}
-	if (Y >= 400-YSize/2)
-	{
-		Vy = 0;
-	}
-}
-
-void PLAYER::RenewPlayersAccel()
-{
-	Ax = Fx / Mass;
-	Ay = Fy / Mass;
-}
-
-void PLAYER::AddForce(double AddFx, double AddFy)
-{
-	Fx += AddFx;
-	Fy += AddFy;
-}
-
-void PLAYER::Frt()
-{
-	Fx = 0; Fy = 0;
-}
-
-void PLAYER::PlayerIni(double PointX, double PointY)
-{
-	X = PointX; Y = PointY;
-	Vx = 0.0;	Vy = 0.0;
-	Ax = 0.0;	Ay = 0.0;
-	Fx = 0.0;	Fy = 0.0;
-	Mass = 1.0; 
-	GraphChangeTimeQMax = 80;
-	GraphChangeTimeQNow = 41;
+	X = 50;	Y = 50;
+	AddX = 2; AddY = 0; dropAddY=0.1;
 	GraphNum = 1;
-	LoadCharGraph();
-}
+	GraphChangeTime_Max = 80;
+	TimeMax = 20;
+	Time = TimeMax;
+	OnGround = false;
+	GraphChangeTime_Now = GraphChangeTime_Max;
+	LoadDivGraph("img/charchip.png", 3, 3, 1, 32, 48, Graph);
+	GetGraphSize(Graph[0], &WIDHT, &HEIGHT);
 
-void PLAYER::LoadCharGraph()
-{
-	LoadDivGraph("img/charchip.png", 6, 3, 2, 32, 48, Graph);
-	GetGraphSize(Graph[0], &XSize, &YSize);
 }
 
 void PLAYER::PlayerDraw()
 {
-	DrawRotaGraph((int)X, (int)Y, 1.0, 0.0, Graph[GraphNum], TRUE);
+	DrawGraph((int)X, (int)Y, Graph[GraphNum], TRUE);
 }
 
-void PLAYER::RenewGraphNum()
+void PLAYER::GraphNumChange()
 {
-	GraphChangeTimeQNow--;
-	if (GraphChangeTimeQNow == 0)
+	if (OnGround)
 	{
-		GraphChangeTimeQNow = GraphChangeTimeQMax;
+		GraphChangeTime_Now--;
 	}
-	if (GraphChangeTimeQNow > 80)GraphNum = 2;
-	else if (GraphChangeTimeQNow > 40)GraphNum = 0;
-	else GraphNum = 2;
+	if (GraphChangeTime_Now > 40)
+	{
+		GraphNum = 0;
+	}
+	else
+	{
+		GraphNum = 2;
+		if (GraphChangeTime_Now <= 0)
+		{
+			GraphChangeTime_Now = GraphChangeTime_Max;
+		}
+	}
 }
+
+void PLAYER::PlayerMove()
+{
+	X += AddX; Y += AddY;
+	if (OnGround)
+	{
+		AddY -= 3;
+	}
+	else
+	{
+		AddY += dropAddY;
+	}
+	if (Y > 400 - HEIGHT)
+	{
+		OnGround = true;
+		if (AddY <= 0)
+		{
+			AddY = 0;
+		}
+		Y = 400 - HEIGHT;
+	}
+	else
+	{
+		OnGround = false;
+	}
+}
+
