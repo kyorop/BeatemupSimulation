@@ -32,7 +32,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
-	while (1)
+	map->MakeObject(SQUARE, 300, 200, 80, 200);
+	while (CheckHitKey(KEY_INPUT_ESCAPE)==0)
 	{
 
 		ClearDrawScreen();
