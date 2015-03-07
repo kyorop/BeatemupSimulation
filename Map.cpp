@@ -270,8 +270,11 @@ void Map::SetDraggedObject(KindObject type, int i)
 	Object* object = GetObj(type, i);
 	if (object == nullptr)
 		return;
-
-	if (highestY == small_stage_size_y)//下に何もオブジェクトが無い時
+	if (lowerY > small_stage_size_y)
+	{
+		return;
+	}
+	else if(highestY == small_stage_size_y)//下に何もオブジェクトが無い時
 	{
 		const int height = object->GetDrawSizeHigh();
 		object->SetDrawPosY(small_stage_size_y - height);
