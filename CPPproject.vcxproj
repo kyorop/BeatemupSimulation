@@ -88,9 +88,22 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="SceneManger.cpp" />
+    <ClCompile Include="Scene_Base.cpp" />
+    <ClCompile Include="Scene_Game.cpp" />
+    <ClCompile Include="Scene_Gameover.cpp" />
+    <ClCompile Include="Scene_Mapcreate.cpp" />
+    <ClCompile Include="Scene_Start.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ISceneChanger.h" />
     <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="SceneManger.h" />
+    <ClInclude Include="Scene_Base.h" />
+    <ClInclude Include="Scene_Game.h" />
+    <ClInclude Include="Scene_Gameover.h" />
+    <ClInclude Include="Scene_Mapcreate.h" />
+    <ClInclude Include="Scene_Start.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
