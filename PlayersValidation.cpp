@@ -1,8 +1,5 @@
 #include "PlayersValidation.h"
 #include "DxLib.h"
-#include"Map.h"
-
-Map* map = Map::GetInstance();
 
 void PlayersValidation::Validation(PLAYER *player)
 {
