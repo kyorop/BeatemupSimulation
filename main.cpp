@@ -35,18 +35,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
 	map->MakeObject(SQUARE, 100, 400-50, 80, 50);
-	map->MakeObject(SQUARE, 300, 400 - 100, 50, 100);
-	/*int X1 = map->m_square[map->GetNumObject(SQUARE)].GetPosX();
-	int Y1 = map->m_square[map->GetNumObject(SQUARE)].GetPosY();
-	int SizeX = map->m_square[map->GetNumObject(SQUARE)].GetSizeWidth();
-	int SizeY = map->m_square[map->GetNumObject(SQUARE)].GetSizeHigh();*/
+	map->MakeObject(HOLE, 300, 400 - 5, 50, 10);
 	while (CheckHitKey(KEY_INPUT_ESCAPE)==0)
 	{
 
 		ClearDrawScreen();
 		DrawBox(0, 0, 640, 400,GetColor(255,255,255),TRUE);
-		DrawBox(100,350,180, 400, GetColor(0, 255, 0), TRUE);
-		DrawBox(300, 300, 350, 400, GetColor(0, 255, 0), TRUE);
+		DrawBox(100, 400 - 50, 180, 400,GetColor(0,255,0),TRUE);
+		DrawOval(325, 400, 25, 5, GetColor(190, 220, 200),TRUE);
 		if (CheckHitKey(KEY_INPUT_Q))
 		{
 			validation.ValidationStart();
