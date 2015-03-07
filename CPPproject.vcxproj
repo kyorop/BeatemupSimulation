@@ -88,9 +88,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PLAYER.cpp" />
+    <ClCompile Include="PlayersValidation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="PlayersValidation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
