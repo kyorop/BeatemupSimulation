@@ -1,5 +1,4 @@
 #include"DxLib.h"
-#include"OBJECT.h"
 #include"PLAYER.h"
 
 #define GRAVITY 1
@@ -17,7 +16,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	PLAYER Pl;
 	Pl.PlayerIni(50.0,50.0);
 	/*Pl.Vx = 3.0;*/
-	OBJECT Obj[4];
 	while (1)
 	{
 
