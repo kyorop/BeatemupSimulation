@@ -52,23 +52,47 @@ void Scene_Mapcreate::Update()
 	int result = 0;
 	if ((result = map->CreateUpdate()) != -1)
 	{
-		switch (result / 10)
+		if (result >= 0)
 		{
-		case SQUARE:
-			numobjects_now[SQUARE]--;
-			break;
-		case HEMISPHERE:
-			numobjects_now[HEMISPHERE]--;
-			break;
-		case SPRING:
-			numobjects_now[SPRING]--;
-			break;
-		case HOLE:
-			numobjects_now[HOLE]--;
-			break;
-		case TRIANGLE:
-			numobjects_now[TRIANGLE]--;
-			break;
+			switch (result / 10)
+			{
+			case SQUARE:
+				numobjects_now[SQUARE]--;
+				break;
+			case HEMISPHERE:
+				numobjects_now[HEMISPHERE]--;
+				break;
+			case SPRING:
+				numobjects_now[SPRING]--;
+				break;
+			case HOLE:
+				numobjects_now[HOLE]--;
+				break;
+			case TRIANGLE:
+				numobjects_now[TRIANGLE]--;
+				break;
+			}
+		}
+		else //アイテムボックスから出てない
+		{
+			switch ((result + 10) / (-100))
+			{
+			case SQUARE:
+				numobjects_now[SQUARE]++;
+				break;
+			case HEMISPHERE:
+				numobjects_now[HEMISPHERE]++;
+				break;
+			case SPRING:
+				numobjects_now[SPRING]++;
+				break;
+			case HOLE:
+				numobjects_now[HOLE]++;
+				break;
+			case TRIANGLE:
+				numobjects_now[TRIANGLE]++;
+				break;
+			}
 		}
 	}
 	
