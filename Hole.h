@@ -6,6 +6,8 @@ class Hole :
 	public Object
 {
 public:
+	void Draw() override;
+public:
 	Hole();
 	~Hole();
 };

@@ -7,7 +7,7 @@ class Square :
 	public Object
 {
 public:
-	void Draw();
+	void Draw() override;
 public:
 	Square();
 	~Square();
