@@ -93,9 +93,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Object_Interface.cpp" />
     <ClCompile Include="PLAYER.cpp" />
-<<<<<<< HEAD
-    <ClCompile Include="PlayersValidation.cpp" />
-=======
+<ClCompile Include="PlayersValidation.cpp" />
     <ClCompile Include="Spring.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Triangle.cpp" />
@@ -105,7 +103,6 @@
     <ClCompile Include="Scene_Gameover.cpp" />
     <ClCompile Include="Scene_Mapcreate.cpp" />
     <ClCompile Include="Scene_Start.cpp" />
->>>>>>> 38dd6564333ef12ae7b4fa9c51421cb5ef24c591
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISceneChanger.h" />
@@ -115,9 +112,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Object_Interface.h" />
     <ClInclude Include="PLAYER.h" />
-<<<<<<< HEAD
     <ClInclude Include="PlayersValidation.h" />
-=======
     <ClInclude Include="Spring.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Triangle.h" />
@@ -130,7 +125,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
->>>>>>> 38dd6564333ef12ae7b4fa9c51421cb5ef24c591
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
