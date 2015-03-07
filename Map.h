@@ -32,6 +32,7 @@ public:
 private:
 	int m_numobjects[TRIANGLE + 1]; //各オブジェクトがいくつあるか。必ずTRIANGLEを最後に
 	const int stage_size_x = 1000 , stage_size_y = 480; //ステージのサイズ
+	const int small_stage_size_y = 300;
 	template<typename tn, typename real_tn>void ReNew(tn &target, int num, int renum, real_tn type); //targetが指す配列をrenum個に拡張する
 
 	int m_h_square;
@@ -46,4 +47,6 @@ private:
 	~Map();
 	Map(const Map& rhs);
 	Map& operator=(const Map& rhs);
+
+	void SetDraggedObject(KindObject type, int i);
 };

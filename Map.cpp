@@ -246,12 +246,52 @@ int Map::CreateUpdate()
 	}
 	else if (m_mouse_updown) //離された時の処理
 	{
-		nowchoose = -1;
+		SetDraggedObject(SQUARE, nowchoose - (nowchoose / 10) * 10);
 		m_mouse_updown = FALSE;
+		nowchoose = -1;
 	}
 	if (mouse_y < 308) //アイテムボックスの中でない
 	{
 		result = -1;
 	}
 	return result;
+}
+
+
+void Map::SetDraggedObject(KindObject type, int i)
+{
+	Object* object=nullptr;
+	//	if (nanimonai)
+	{
+		switch (type)
+		{
+		case SQUARE:
+			object = &m_square[i];
+			break;
+		case HEMISPHERE:
+			object = &m_hemisphere[i];
+			break;
+		case SPRING: 
+			object = &m_spring[i];
+			break;
+		case HOLE: 
+			object = &m_hole[i];
+			break;
+		case TRIANGLE: 
+			object = &m_triangle[i];
+			break;
+		default:
+			break;
+		}
+		if (object != nullptr)
+		{
+			const int height = object->GetDrawSizeHigh();
+			object->SetDrawPosY(small_stage_size_y - height);
+		}
+	}
+	//	else
+	{
+
+	}
+
 }
