@@ -38,7 +38,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	{
 
 		ClearDrawScreen();
-//		DrawBox(0, 0, 640, 400,GetColor(255,255,255),TRUE);
 //		if (CheckHitKey(KEY_INPUT_Q))
 //		{
 //			validation.ValidationStart();
@@ -79,7 +78,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		ScreenFlip();
 
-		if (ProcessMessage() == -1)
+		if (ProcessMessage() == -1 || CheckHitKey(KEY_INPUT_ESCAPE) == 1)
 			break;
 	}
 
