@@ -17,15 +17,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return -1;
 	SetGraphMode(640, 480, 16);
 	SetDrawScreen(DX_SCREEN_BACK);
-<<<<<<< HEAD
+
 	SetMouseDispFlag(TRUE);//マウスポインタをゲームウィンドウに表示する
-	bool PlayMode=false;
-	PLAYER Pl;
-	Pl.PlayerIni(50.0,50.0);
+	
+	
 	bool mouse_flag = false;
 	bool mouse_last_flag = false;
-=======
->>>>>>> c1d0fff4cb35607b18299ae03d0a03f6622accc8
+
 
 	SetMouseDispFlag(TRUE);//マウスポインタをゲームウィンドウに表示する	
 	PLAYER player;//プレイヤークラスの宣言
@@ -49,13 +47,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 			DrawString(0, 0, "Qキーを押すとPlayerの動作確認", GetColor(0, 0, 0));
 		}
-<<<<<<< HEAD
-			else
-			{
-				Time = 60;
-				Pl.AddForce(0.0, -1000 * Pl.Mass);
-			}
-		}
+
+			
+		
 		mouse_flag = GetMouseInput() & MOUSE_INPUT_LEFT;
 		if (mouse_flag && !mouse_last_flag)
 		{
@@ -67,27 +61,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			mouse_last_flag = FALSE;
 		}
 
-		Pl.RenewPlayersAccel();
-		Pl.RenewPlayersSpeed();
-		Pl.RenewPlayersPoint();
-
 		
-		DrawFormatString(0, 0, GetColor(0,0,0), "速度(Y軸)：%lf", Pl.Vy);
-		DrawFormatString(0, 16, GetColor(0,0,0), "加速度(Y軸)：%lf", Pl.Ay);
-		DrawFormatString(0, 32, GetColor(0,0,0), "力(Y軸)：%lf", Pl.Fy);
-		DrawFormatString(0, 48, GetColor(0, 0, 0), "Y座標：%lf", Pl.Y);
+		
+		
 		DrawFormatString(0, 64, GetColor(0, 128, 0), "test：%d", map->GetNumObject(SPRING)); //使い方の例
 		if (map->GetNumObject(SPRING) >= 2)
 		{
 			DrawFormatString(0, 80, GetColor(0, 128, 0), "test2：%d", map -> m_spring[1].GetPosX()); //使い方の例
 		}
 		
-		
-=======
 
-		
-
->>>>>>> c1d0fff4cb35607b18299ae03d0a03f6622accc8
 		ScreenFlip();
 
 		if (ProcessMessage() == -1)
