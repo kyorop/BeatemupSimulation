@@ -16,6 +16,7 @@ Scene_Mapcreate::Scene_Mapcreate()
 	groundX2(640),
 	groundY2(groundY1)
 {
+	handle_square = LoadGraph("img/square.png");
 }
 
 void Scene_Mapcreate::Update()
@@ -27,4 +28,5 @@ void Scene_Mapcreate::Draw()
 	DrawFormatString(0, 0, GetColor(255, 255, 255), "This scene is Mapcreate");
 	DrawLine(groundX1, groundY1, groundX2, groundY2, GetColor(255, 0, 0), 4);
 	DrawBox(objWindowX1, objWindowY1, objWindowX2, objWindowY2, GetColor(255, 0, 0), false);
+	DrawExtendGraph(objWindowX1, objWindowY1, objWindowX2, objWindowY2, handle_square, true);
 }

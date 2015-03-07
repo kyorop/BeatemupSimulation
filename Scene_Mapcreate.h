@@ -14,6 +14,12 @@ class Scene_Mapcreate
 	const int groundX2;
 	const int groundY2;
 
+	int handle_square;
+	int handle_triangle;
+	int handle_hemisphere;
+	int handle_hole;
+	int handle_spring;
+
 	void UpdateScene() override;
 public:
 	Scene_Mapcreate();
