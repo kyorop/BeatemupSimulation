@@ -34,17 +34,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
-	map->MakeObject(SQUARE, 100, 400-50, 80, 50);
-	map->MakeObject(SQUARE, 300, 400 - 100, 50, 100);
-	/*int X1 = map->m_square[map->GetNumObject(SQUARE)].GetPosX();
-	int Y1 = map->m_square[map->GetNumObject(SQUARE)].GetPosY();
-	int SizeX = map->m_square[map->GetNumObject(SQUARE)].GetSizeWidth();
-	int SizeY = map->m_square[map->GetNumObject(SQUARE)].GetSizeHigh();*/
+	
 	while (CheckHitKey(KEY_INPUT_ESCAPE)==0)
 	{
 
 		ClearDrawScreen();
-
+		sceneManager.Update();
+		sceneManager.Draw();
 		ScreenFlip();
 
 		if (ProcessMessage() == -1 || CheckHitKey(KEY_INPUT_ESCAPE) == 1)

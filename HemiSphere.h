@@ -6,8 +6,6 @@ class HemiSphere :
 	public Object
 {
 public:
-	void Draw() override;
-public:
 	HemiSphere();
 	~HemiSphere();
 };

@@ -15,7 +15,6 @@ public:
 	KindObject GetObjectType(){ return m_kindobject; } //オブジェクトのタイプを返す
 	void SetObject(int posx, int posy, int sizex, int sizey);
 
-<<<<<<< HEAD
 	//以下はMapCreateで使用
 	int GetDrawSizeWidth(){ return m_draw_size_x; } //オブジェクトの横のサイズを返す
 	int GetDrawSizeHigh(){ return m_draw_size_y; } //オブジェクトの縦のサイズを返す

@@ -9,11 +9,11 @@ Map::Map()
 		m_numobjects[i] = 0;
 	}
 	SetTransColor(255, 255, 255); //”’‚ð“§‰ß‚·‚é‚æ‚¤‚É
-	m_h_square = LoadGraph("img/square.png");
-	m_h_hemisphere = LoadGraph("img/hemisphere.png");
-	m_h_hole = LoadGraph("img/hole.png");
-	m_h_spring = LoadGraph("img/spring.png");
-	m_h_triangle = LoadGraph("img/triangle.png");
+	m_h_square = LoadGraph("./img/square.png");
+	m_h_hemisphere = LoadGraph("./img/hemisphere.png");
+	m_h_hole = LoadGraph("./img/hole.png");
+	m_h_spring = LoadGraph("./img/spring.png");
+	m_h_triangle = LoadGraph("./img/triangle.png");
 	nowchoose = -1;
 }
 
@@ -87,34 +87,6 @@ void Map::MakeObject(KindObject ko, int posx, int posy, int sizex, int sizey)
 		break;
 	}
 
-}
-
-void Map::Draw()
-{
-	for (int i = SQUARE; i <= TRIANGLE; i++)
-	{
-		for (int j = 0; j < m_numobjects[i]; j++)
-		{
-			switch (i)
-			{
-			case SQUARE:
-				m_square[j].Draw();
-				break;
-			case HEMISPHERE:
-				m_triangle[j].Draw();
-				break;
-			case SPRING:
-				m_spring[j].Draw();
-				break;
-			case HOLE:
-				m_hole[j].Draw();
-				break;
-			case TRIANGLE:
-				m_triangle[j].Draw();
-				break;
-			}
-		}
-	}
 }
 
 template<typename tn, typename real_tn>void Map::ReNew(tn &target, int num, int renum, real_tn type)
