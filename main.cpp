@@ -34,22 +34,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
-	map->MakeObject(SQUARE, 300, 200, 80, 200);
+	map->MakeObject(SQUARE, 100, 400-50, 80, 50);
+	map->MakeObject(SQUARE, 300, 400 - 100, 50, 100);
+	/*int X1 = map->m_square[map->GetNumObject(SQUARE)].GetPosX();
+	int Y1 = map->m_square[map->GetNumObject(SQUARE)].GetPosY();
+	int SizeX = map->m_square[map->GetNumObject(SQUARE)].GetSizeWidth();
+	int SizeY = map->m_square[map->GetNumObject(SQUARE)].GetSizeHigh();*/
 	while (CheckHitKey(KEY_INPUT_ESCAPE)==0)
 	{
 
 		ClearDrawScreen();
-//		DrawBox(0, 0, 640, 400,GetColor(255,255,255),TRUE);
-//		if (CheckHitKey(KEY_INPUT_Q))
-//		{
-//			validation.ValidationStart();
-//			player.PlayerIni();//プレイヤーの初期化
-//		}
-//		if (validation.ValidationPlay()){ validation.Validation(&player); }
-//		else
-//		{
-//			DrawString(0, 0, "Qキーを押すとPlayerの動作確認", GetColor(0, 0, 0));
-//		}
+		DrawBox(0, 0, 640, 400,GetColor(255,255,255),TRUE);
+		DrawBox(100,350,180, 400, GetColor(0, 255, 0), TRUE);
+		DrawBox(300, 300, 350, 400, GetColor(0, 255, 0), TRUE);
+		if (CheckHitKey(KEY_INPUT_Q))
+		{
+			validation.ValidationStart();
+			player.PlayerIni();//プレイヤーの初期化
+		}
+		if (validation.ValidationPlay()){ validation.Validation(&player); }
+		else
+		{
+			DrawString(0, 0, "Qキーを押すとPlayerの動作確認", GetColor(0, 0, 0));
+		}
 //
 //			
 //		
@@ -74,8 +81,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //		}
 		
 
-		sceneManager.Update();
-		sceneManager.Draw();
+		/*sceneManager.Update();
+		sceneManager.Draw();*/
 
 
 		ScreenFlip();
