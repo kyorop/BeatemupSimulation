@@ -30,6 +30,7 @@ public:
 	bool CheckHitMouse(int mouse_x, int mouse_y); //マウスとこのオブジェクトの位置が被っているかどうかを返す。被っているならTRUE
 	bool IsSet(){ return isSet; };
 	void PutOnGround(){ isSet = true; }
+	void ResetDrawPos();
 //	virtual void Draw()=0;
 private:
 	int m_pos_x; //オブジェクトの左上のx座標
@@ -42,6 +43,13 @@ private:
 	int m_draw_size_y; //マップ作製で描画する際の横の大きさ
 	KindObject m_kindobject; //オブジェクトのタイプ
 	bool isSet = false;
+
+	//以下初期値を保存しておくための変数
+	bool initialized;
+	int initDrawX1;
+	int initDrawY1;
+	int initDrawWidth;
+	int initDrawHeight;
 protected:
 	void SetKindObject(KindObject ko){ m_kindobject = ko; } //オブジェクトのタイプを代入
 };

@@ -270,7 +270,7 @@ void Map::SetDraggedObject(KindObject type, int i)
 	const int highestY = GetHighestY(x1, x2, lowerY);
 	Object* object = nullptr;
 
-	if (highestY >= small_stage_size_y)
+	if (highestY == small_stage_size_y)
 	{
 		object = GetObj(type, i); 
 		if (object != nullptr)
@@ -279,7 +279,7 @@ void Map::SetDraggedObject(KindObject type, int i)
 			object->SetDrawPosY(small_stage_size_y - height);
 		}
 	}
-	else
+	else if (lowerY <= highestY)
 	{
 		object = GetObj(type, i);
 		if (object != nullptr)
@@ -287,6 +287,14 @@ void Map::SetDraggedObject(KindObject type, int i)
 			const int height = object->GetDrawSizeHigh();
 			object->SetDrawPosY(highestY - height);
 			object->PutOnGround();
+		}
+	}
+	else
+	{
+		object = GetObj(type, i);
+		if (object != nullptr)
+		{
+			object->ResetDrawPos();
 		}
 	}
 }
