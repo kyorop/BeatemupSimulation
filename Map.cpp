@@ -251,11 +251,15 @@ int Map::CreateUpdate()
 		const int droppedI = nowchoose - (nowchoose / 10) * 10;
 		SetDraggedObject(droppedType, droppedI);
 		m_mouse_updown = FALSE;
+		if (mouse_y < small_stage_size_y) //アイテムボックスの中でない
+		{
+			result = -1;
+		}
+		else
+		{
+			result = nowchoose * (-10) - 10; //特殊な処理
+		}
 		nowchoose = -1;
-	}
-	if (mouse_y < small_stage_size_y) //アイテムボックスの中でない
-	{
-		result = -1;
 	}
 	return result;
 }

@@ -66,3 +66,15 @@ void Object::ResetDrawPos()
 		m_draw_size_y = m_size_y = initDrawHeight;
 	}
 }
+
+
+void Object::ReminSize(int size_x, int size_y)
+{
+
+}
+
+
+void Object::RemaxSize(int size_x, int size_y)
+{
+
+}

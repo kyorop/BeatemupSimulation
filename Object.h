@@ -31,6 +31,8 @@ public:
 	bool IsSet(){ return isSet; };
 	void PutOnGround(){ isSet = true; }
 	void ResetDrawPos();
+	void ReminSize(int size_x, int size_y); //DrawSizeの縮小。size_yは実際の全画面のxのサイズ
+	void RemaxSize(int size_x, int size_y); //DrawSizeの拡大
 //	virtual void Draw()=0;
 private:
 	int m_pos_x; //オブジェクトの左上のx座標
