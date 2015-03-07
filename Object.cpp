@@ -70,7 +70,9 @@ void Object::ResetDrawPos()
 
 void Object::ReminSize(int size_x, int size_y)
 {
-
+	//ÇøÇ¢Ç≥Ç≠Ç»ÇÈ
+	SetDrawSizeWidth(m_draw_size_x * 640 / size_x);
+	SetDrawSizeHigh(m_draw_size_y * 300 / size_y);
 }
 
 
@@ -79,20 +81,7 @@ void Object::RemaxSize()
 	//å≥ÇÃç¿ïWÇ…ñﬂÇ∑
 	SetDrawPosX(m_pos_x);
 	SetDrawPosY(m_pos_y);
-	/*switch (m_kindobject)
-	{
-	case SQUARE:
-		SetDrawPosX(10);
-		break;
-	case HEMISPHERE:
-		break;
-	case SPRING:
-		break;
-	case HOLE:
-		break;
-	case TRIANGLE:
-		break;
-	default:
-		break;
-	}*/
+	//å≥ÇÃëÂÇ´Ç≥Ç…ñﬂÇ∑
+	SetDrawSizeWidth(m_size_x);
+	SetDrawSizeHigh(m_size_y);
 }

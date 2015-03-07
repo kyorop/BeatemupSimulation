@@ -58,18 +58,23 @@ void Scene_Mapcreate::Update()
 			{
 			case SQUARE:
 				numobjects_now[SQUARE]--;
+				map->m_square[result - (result / 10) * 10].ReminSize(stage_size_x, stage_size_y);
 				break;
 			case HEMISPHERE:
 				numobjects_now[HEMISPHERE]--;
+				map->m_hemisphere[result - (result / 10) * 10].ReminSize(stage_size_x, stage_size_y);
 				break;
 			case SPRING:
 				numobjects_now[SPRING]--;
+				map->m_spring[result - (result / 10) * 10].ReminSize(stage_size_x, stage_size_y);
 				break;
 			case HOLE:
 				numobjects_now[HOLE]--;
+				map->m_hole[result - (result / 10) * 10].ReminSize(stage_size_x, stage_size_y);
 				break;
 			case TRIANGLE:
 				numobjects_now[TRIANGLE]--;
+				map->m_triangle[result - (result / 10) * 10].ReminSize(stage_size_x, stage_size_y);
 				break;
 			}
 		}
