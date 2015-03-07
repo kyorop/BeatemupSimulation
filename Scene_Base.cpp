@@ -9,6 +9,7 @@ Scene_Base::Scene_Base()
 
 Scene_Base::~Scene_Base(void)
 {
+
 }
 
 

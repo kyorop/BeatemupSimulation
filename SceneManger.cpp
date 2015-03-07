@@ -1,9 +1,12 @@
 #include "SceneManger.h"
 #include "Scene_Base.h"
+#include "Scene_Start.h"
+#include "Scene_Game.h"
+#include "Scene_Mapcreate.h"
 
 SceneManger::SceneManger(void)
-	:nextScene(NOCHANGE)
-	//scene(new Scene_Menu)
+	:nextScene(NOCHANGE),
+	scene(new Scene_Start)
 {
 	scene->SetManager(this);
 	scene->Initialize();
@@ -26,19 +29,14 @@ void SceneManger::Update(void)
 
 		switch(nextScene)
 		{
-//		case ISceneChanger::SCENE_MENU:
-//			scene  = new Scene_Menu;
-//			break;
-//		case ISceneChanger::SCENE_GAME:
-//			scene = new Scene_Game;
-//			break;
-//		case ISceneChanger::SCENE_ROUND:
-//			scene = new Scene_Round;
-//			break;
-//		case ISceneChanger::SCENE_SCORE:
-//			scene = new Scene_Score;
-//			break;
+		case ISceneChanger::SCENE_GAME:
+			scene  = new Scene_Game;
+			break;
+		case ISceneChanger::SCENE_MAPCREATE:
+			scene = new Scene_Mapcreate;
+			break;
 		}
+
 		nextScene = ISceneChanger::NOCHANGE;
 		scene->Initialize();
 		scene->SetManager(this);
