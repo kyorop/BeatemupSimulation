@@ -250,7 +250,6 @@ int Map::CreateUpdate()
 		const KindObject droppedType = static_cast<KindObject>(nowchoose / 10);
 		const int droppedI = nowchoose - (nowchoose / 10) * 10;
 		SetDraggedObject(droppedType, droppedI);
-		GetObj(droppedType, droppedI)->PutOnGround();
 		m_mouse_updown = FALSE;
 		nowchoose = -1;
 	}
@@ -268,34 +267,32 @@ void Map::SetDraggedObject(KindObject type, int i)
 	const int x2 = x1 + GetObj(type, i)->GetDrawSizeWidth();
 	const int lowerY = GetObj(type, i)->GetDrawPosY() + GetObj(type, i)->GetDrawSizeHigh();
 	const int highestY = GetHighestY(x1, x2, lowerY);
-	Object* object = nullptr;
+	Object* object = GetObj(type, i);
+	if (object == nullptr)
+		return;
 
-	if (highestY == small_stage_size_y)
+	if (highestY == small_stage_size_y)//下に何もオブジェクトが無い時
 	{
-		object = GetObj(type, i); 
-		if (object != nullptr)
-		{
-			const int height = object->GetDrawSizeHigh();
-			object->SetDrawPosY(small_stage_size_y - height);
-		}
+		const int height = object->GetDrawSizeHigh();
+		object->SetDrawPosY(small_stage_size_y - height);
+		object->PutOnGround();
 	}
-	else if (lowerY <= highestY)
+	else if (lowerY <= highestY)//下にオブジェクトがあるとき
 	{
-		object = GetObj(type, i);
-		if (object != nullptr)
-		{
-			const int height = object->GetDrawSizeHigh();
-			object->SetDrawPosY(highestY - height);
-			object->PutOnGround();
-		}
-	}
-	else
-	{
-		object = GetObj(type, i);
-		if (object != nullptr)
+		//落とし穴は重なってたら無条件で、リセット
+		if (type == HOLE)
 		{
 			object->ResetDrawPos();
+			return;
 		}
+
+		const int height = object->GetDrawSizeHigh();
+		object->SetDrawPosY(highestY - height);
+		object->PutOnGround();
+	}
+	else//すでにあるオブジェクトより下にドロップした時
+	{
+		object->ResetDrawPos();
 	}
 }
 
@@ -303,31 +300,23 @@ int Map::GetHighestY(int x1, int x2, int lowerY)
 {
 	int highestY=small_stage_size_y;
 
-	for (int i = 0; i < m_numobjects[SQUARE]; i++)
+	for (int type = SQUARE; type <= TRIANGLE; type++)
 	{
-		if (m_square[i].IsSet())
+		for (int i = 0; i < m_numobjects[type]; i++)
 		{
-			const int doneX1 = m_square[i].GetDrawPosX();
-			const int doneX2 = doneX1 + m_square[i].GetDrawSizeWidth();
-			const int doneUpperY = m_square[i].GetDrawPosY();
-			if (CheckHitLine(x1, x2, doneX1, doneX2))
+			if (GetObj(static_cast<KindObject>(type), i)->IsSet())
 			{
-				if (highestY > doneUpperY)
-					highestY = doneUpperY;
+				Object* object = GetObj(static_cast<KindObject>(type), i);
+				const int doneX1 = object->GetDrawPosX();
+				const int doneX2 = doneX1 + object->GetDrawSizeWidth();
+				const int doneUpperY = object->GetDrawPosY();
+				if (CheckHitLine(x1, x2, doneX1, doneX2))
+				{
+					if (highestY > doneUpperY)
+						highestY = doneUpperY;
+				}
 			}
 		}
-	}
-	for (int i = 0; i < m_numobjects[HEMISPHERE]; i++)
-	{
-	}
-	for (int i = 0; i < m_numobjects[SPRING]; i++)
-	{
-	}
-	for (int i = 0; i < m_numobjects[HOLE]; i++)
-	{
-	}
-	for (int i = 0; i < m_numobjects[TRIANGLE]; i++)
-	{
 	}
 
 	return highestY;
