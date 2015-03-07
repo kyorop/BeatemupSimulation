@@ -7,7 +7,7 @@ class SceneManger
 {
 
 private:
-	SCENETYPE nextScene;
+	SceneType nextScene;
 	Scene_Base *scene;
 public:
 	SceneManger(void);
@@ -15,7 +15,7 @@ public:
 
 	void Update(void);
 	void Draw(void);
-	void ChangeScene(int nextScene) override;
+	void ChangeScene(SceneType nextScene) override;
 	void PlaySE(void);
 };
 

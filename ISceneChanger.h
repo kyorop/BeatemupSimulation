@@ -4,7 +4,7 @@ class Scene_Base;
 class ISceneChanger
 {
 public:
-	enum SCENETYPE
+	enum SceneType
 	{
 		NOCHANGE,
 		SCENE_START,
@@ -16,6 +16,6 @@ public:
 
 public:
 	virtual ~ISceneChanger(void){};
-	virtual void ChangeScene(int nextScene) = 0;
+	virtual void ChangeScene(SceneType nextScene) = 0;
 };
 

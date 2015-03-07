@@ -63,7 +63,7 @@ void SceneManger::Draw(void)
 }
 
 
-void SceneManger::ChangeScene(int next)
+void SceneManger::ChangeScene(SceneType next)
 {
 	nextScene = next;
 }
