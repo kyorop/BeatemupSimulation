@@ -4,7 +4,10 @@
 
 void Scene_Mapcreate::UpdateScene()
 {
-	
+	if (CheckHitKey(KEY_INPUT_RETURN))
+	{
+		sceneMrg->ChangeScene(ISceneChanger::SCENE_GAME);
+	}
 }
 
 Scene_Mapcreate::Scene_Mapcreate()
@@ -49,6 +52,7 @@ Scene_Mapcreate::Scene_Mapcreate()
 
 void Scene_Mapcreate::Update()
 {
+	UpdateScene();
 	int result = 0;
 	if ((result = map->CreateUpdate()) != -1)
 	{

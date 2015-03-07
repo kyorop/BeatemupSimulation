@@ -23,14 +23,14 @@ public:
 	double GetPosY(){ return Y; }
 	int GetHeight(){ return HEIGHT; }
 	int GetWidht(){ return WIDHT; }
-	bool GetOnGround();
+	void CheckOnGround();
 	void PlayerIni();
 	void PlayerDraw();
 	void GraphNumChange();
 	void PlayerMove();
 	void DoJump();//キャラクターがオブジェクト近づいたらジャンプ
-
-	void DoJump_a();//2～6の押したキーの数字分だけ上昇速度でジャンプする
+	void PlyersUpdate();//プレイヤーキャラクターの動作のまとめ
+	void DoJump_a();//ジャンプ力による最高高度の確認
 
 	double GetAddY(){ return AddY; }
 };

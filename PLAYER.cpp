@@ -4,6 +4,8 @@
 #include<math.h>
 
 #define UNDERDRAWLINE 400
+#define MAXJUMP 4.2
+#define MAXJUMP2 5.0
 //double PLAYER::GetPosX(){	return X;}
 //double PLAYER::GetPosY(){	return Y;}
 //int PLAYER::GetHeight(){	return HEIGHT;}
@@ -12,9 +14,9 @@
 
 void PLAYER::PlayerIni()
 {
-	X = 0;	Y = 352;
-	AddX = 1; AddY = 0; dropAddY=0.1;
-	MaxY = Y;
+	
+	AddX = 1; AddY = 0; dropAddY=0.12;
+	
 	GraphNum = 1;
 	GraphChangeTime_Max = 80;
 	TimeMax = 20;
@@ -24,7 +26,8 @@ void PLAYER::PlayerIni()
 	LoadDivGraph("img/charchip.png", 3, 3, 1, 32, 48, Graph);
 	GetGraphSize(Graph[0], &WIDHT, &HEIGHT);
 	map = Map::GetInstance();
-
+	X = 0;	Y = UNDERDRAWLINE - HEIGHT;
+	MaxY = Y;
 }
 
 void PLAYER::PlayerDraw()
@@ -79,24 +82,58 @@ void PLAYER::PlayerMove()
 	X += AddX; Y += AddY;
 	if (Y < MaxY)MaxY = Y;
 
+	if (AddY>MAXJUMP2)AddY = MAXJUMP2;
+	if (AddY < -MAXJUMP2)AddY = -MAXJUMP2;
+
 	if (OnGround==false)
 	{
 		AddY += dropAddY;
 	}
-	
-	/*if (Y >= UNDERDRAWLINE - HEIGHT)
+	for (int r = 0; r < map->GetNumObject(SQUARE); r++)
 	{
-		OnGround = true;
-		if (AddY >= 0)
+		int height1 = map->m_square[r].GetPosY() - ((int)Y+HEIGHT);
+		int height2 = map->m_square[r].GetPosY()+map->m_square[r].GetSizeHigh() - (int)Y;
+		//オブジェクトの上底の高さとキャラクター画像の底辺の高さの差
+		//負であればキャラクター画像の底辺はオブジェクトの上底よりも下に表示されている
+		int widht1 = map->m_square[r].GetPosX() - ((int)X + WIDHT);
+		//オブジェクトの左端とキャラクター画像の右端のX座標の差
+		//負であればキャラクター画像の右端はオブジェクトの左端よりも右に表示されている
+		int widht2 = map->m_square[r].GetPosX() + map->m_square[r].GetSizeWidth() - (int)X;
+		//オブジェクトの右端とキャラクター画像の左端のX座標の差
+		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
+		if (widht1 <=0 && height2>0 && height1 <= 0&&widht2<=0)
 		{
-			AddY = 0;
+			X -= AddX;
 		}
-		Y = UNDERDRAWLINE - HEIGHT;
 	}
-	else
+	for (int r = 0; r < map->GetNumObject(SPRING); r++)
 	{
-		OnGround = false;
-	}*/
+		int height1 = map->m_spring[r].GetPosY() - ((int)Y + HEIGHT);
+		int height2 = map->m_spring[r].GetPosY() + map->m_spring[r].GetSizeHigh() - (int)Y;
+		//オブジェクトの上底の高さとキャラクター画像の底辺の高さの差
+		//負であればキャラクター画像の底辺はオブジェクトの上底よりも下に表示されている
+		int widht1 = map->m_spring[r].GetPosX() - ((int)X + WIDHT);
+		//オブジェクトの左端とキャラクター画像の右端のX座標の差
+		//負であればキャラクター画像の右端はオブジェクトの左端よりも右に表示されている
+		int widht2 = map->m_spring[r].GetPosX() + map->m_spring[r].GetSizeWidth() - (int)X;
+		//オブジェクトの右端とキャラクター画像の左端のX座標の差
+		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
+		if (widht1 <0 && height2>0 && height1 <= 0 && widht2<0)
+		{
+			X -= AddX;
+		}
+	}
+	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
+	{
+		int Cx = X + WIDHT/2;
+		int Cy = Y + HEIGHT;
+		if (Cx > map->m_hemisphere[r].GetPosX()&&map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth() / 2>Cx)
+		{
+			X -= AddX;
+		}
+	}
+
+
 }
 
 void PLAYER::DoJump()
@@ -109,6 +146,7 @@ void PLAYER::DoJump()
 		{
 			AddY = 0;
 			AddY -= sqrt(2 * dropAddY*(height));
+			if (AddY <= -MAXJUMP)AddY = -MAXJUMP;
 		}
 	}
 	for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
@@ -119,8 +157,39 @@ void PLAYER::DoJump()
 		{
 			AddY = 0;
 			AddY -= sqrt(2 * dropAddY*(height));
+			if (AddY <= -MAXJUMP)AddY = -MAXJUMP;
 		}
 	}
+	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
+	{
+		int height = map->m_hemisphere[r].GetSizeHigh() + GetHeight() / 2;
+		int widht = map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetDrawSizeWidth() / 2 - (int)GetPosX();
+		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht() / 2 && OnGround&&widht>GetWidht())
+		{
+			AddY = 0;
+			AddY -= sqrt(2 * dropAddY*(height));
+			if (AddY <= -MAXJUMP)AddY = -MAXJUMP;
+		}
+	}
+	
+	for (int r = 0; r < map->GetNumObject(SPRING); r++)
+	{
+		int height = map->m_spring[r].GetPosY() - ((int)Y + HEIGHT);
+		//オブジェクトの上底の高さとキャラクター画像の底辺の高さの差
+		//負であればキャラクター画像の底辺はオブジェクトの上底よりも下に表示されている
+		int widht1 = map->m_spring[r].GetPosX() - ((int)X + WIDHT);
+		//オブジェクトの左端とキャラクター画像の右端のX座標の差
+		//負であればキャラクター画像の右端はオブジェクトの左端よりも右に表示されている
+		int widht2 = map->m_spring[r].GetPosX() + map->m_spring[r].GetSizeWidth() - (int)X;
+		//オブジェクトの右端とキャラクター画像の左端のX座標の差
+		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
+		if (widht1 <0 && widht2>0 && height <= 0)
+		{
+			AddY = AddY*(-1.35);
+			if (AddY < MAXJUMP2)AddY = -MAXJUMP2;
+		}
+	}
+	
 }
 
 
@@ -131,32 +200,32 @@ void PLAYER::DoJump_a()
 		if (CheckHitKey(KEY_INPUT_2))
 		{
 			AddY = 0;
-			AddY -= 2;
+			AddY -= 4.2;
 		}
 		if (CheckHitKey(KEY_INPUT_3))
 		{
 			AddY = 0;
-			AddY -= 3;
+			AddY -= 4.4;
 		}
 		if (CheckHitKey(KEY_INPUT_4))
 		{
 			AddY = 0;
-			AddY -= 4;
+			AddY -= 4.6;
 		}
 		if (CheckHitKey(KEY_INPUT_5))
 		{
 			AddY = 0;
-			AddY -= 5;
+			AddY -= 4.8;
 		}
 		if (CheckHitKey(KEY_INPUT_6))
 		{
 			AddY = 0;
-			AddY -= 6;
+			AddY -= 5.0;
 		}
 	}
 }
 
-bool PLAYER::GetOnGround()
+void PLAYER::CheckOnGround()
 {
 
 	for (int r = 0; r < map->GetNumObject(SQUARE); r++)
@@ -176,7 +245,6 @@ bool PLAYER::GetOnGround()
 			if (AddY>0)
 			AddY = 0;
 			OnGround = true;
-			return OnGround;
 		}
 		else
 		{
@@ -196,9 +264,9 @@ bool PLAYER::GetOnGround()
 		if (widht1<0 && widht2>0&&height<=GetHeight())
 		{
 			OnGround = false;
-			return OnGround;
 		}
 	}
+	
 	if (Y >= UNDERDRAWLINE+10 - HEIGHT)
 	{
 		OnGround = false;
@@ -215,6 +283,13 @@ bool PLAYER::GetOnGround()
 	else
 	{
 		OnGround = false;
-	}
-	return OnGround;
+	}	
+}
+
+void PLAYER::PlyersUpdate()
+{
+	DoJump();
+	CheckOnGround();
+	GraphNumChange();
+	PlayerMove();
 }
