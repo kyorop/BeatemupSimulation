@@ -4,6 +4,7 @@
 Object::Object()
 {
 	m_click_flag = FALSE;
+	isSet = false;
 	initialized = false;
 }
 
