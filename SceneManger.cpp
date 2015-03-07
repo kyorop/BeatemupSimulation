@@ -3,6 +3,7 @@
 #include "Scene_Start.h"
 #include "Scene_Game.h"
 #include "Scene_Mapcreate.h"
+#include "Scene_Gameover.h"
 
 SceneManger::SceneManger(void)
 	:nextScene(NOCHANGE),
@@ -29,12 +30,22 @@ void SceneManger::Update(void)
 
 		switch(nextScene)
 		{
-		case ISceneChanger::SCENE_GAME:
-			scene  = new Scene_Game;
+		case NOCHANGE: break;
+		case SCENE_START:
+			scene = new Scene_Start;
 			break;
-		case ISceneChanger::SCENE_MAPCREATE:
+		case SCENE_MAPCREATE:
 			scene = new Scene_Mapcreate;
 			break;
+		case SCENE_GAME: 
+			scene = new Scene_Game;
+			break;
+		case SCENE_GOAL:
+			break;
+		case SCENE_GAMEOVER:
+			scene = new Scene_Gameover;
+			break;
+		default: break;
 		}
 
 		nextScene = ISceneChanger::NOCHANGE;
@@ -52,7 +63,7 @@ void SceneManger::Draw(void)
 }
 
 
-void SceneManger::ChangeScene(int next)
+void SceneManger::ChangeScene(SceneType next)
 {
 	nextScene = next;
 }

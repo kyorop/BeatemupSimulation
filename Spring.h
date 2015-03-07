@@ -6,8 +6,6 @@ class Spring :
 	public Object
 {
 public:
-	void Draw() override;
-public:
 	Spring();
 	~Spring();
 };

@@ -8,6 +8,13 @@ Map::Map()
 	{
 		m_numobjects[i] = 0;
 	}
+	SetTransColor(255, 255, 255); //白を透過するように
+	m_h_square = LoadGraph("./img/square.png");
+	m_h_hemisphere = LoadGraph("./img/hemisphere.png");
+	m_h_hole = LoadGraph("./img/hole.png");
+	m_h_spring = LoadGraph("./img/spring.png");
+	m_h_triangle = LoadGraph("./img/triangle.png");
+	nowchoose = -1;
 }
 
 
@@ -82,34 +89,6 @@ void Map::MakeObject(KindObject ko, int posx, int posy, int sizex, int sizey)
 
 }
 
-void Map::Draw()
-{
-	for (int i = SQUARE; i <= TRIANGLE; i++)
-	{
-		for (int j = 0; j < m_numobjects[i]; j++)
-		{
-			switch (i)
-			{
-			case SQUARE:
-				m_square[j].Draw();
-				break;
-			case HEMISPHERE:
-				m_triangle[j].Draw();
-				break;
-			case SPRING:
-				m_spring[j].Draw();
-				break;
-			case HOLE:
-				m_hole[j].Draw();
-				break;
-			case TRIANGLE:
-				m_triangle[j].Draw();
-				break;
-			}
-		}
-	}
-}
-
 template<typename tn, typename real_tn>void Map::ReNew(tn &target, int num, int renum, real_tn type)
 {
 	tn temp = new real_tn[renum]; //まず新しいメモリを確保
@@ -122,4 +101,153 @@ template<typename tn, typename real_tn>void Map::ReNew(tn &target, int num, int 
 		delete[] target; //開放
 	}
 	target = temp; //入れなおす
+}
+
+
+void Map::CreateDraw()
+{
+	//各オブジェクトを描画する
+	for (int i = 0; i < m_numobjects[SQUARE]; i++)
+	{
+		m_square[i].CreateDraw(m_h_square);
+	}
+	for (int i = 0; i < m_numobjects[HEMISPHERE]; i++)
+	{
+		m_hemisphere[i].CreateDraw(m_h_hemisphere);
+	}
+	for (int i = 0; i < m_numobjects[SPRING]; i++)
+	{
+		m_spring[i].CreateDraw(m_h_spring);
+	}
+	for (int i = 0; i < m_numobjects[HOLE]; i++)
+	{
+		m_hole[i].CreateDraw(m_h_hole);
+	}
+	for (int i = 0; i < m_numobjects[TRIANGLE]; i++)
+	{
+		m_triangle[i].CreateDraw(m_h_triangle);
+	}
+}
+
+
+void Map::Draw()
+{
+	//各オブジェクトを描画する
+	for (int i = 0; i < m_numobjects[SQUARE]; i++)
+	{
+		m_square[i].Draw(m_h_square);
+	}
+	for (int i = 0; i < m_numobjects[HEMISPHERE]; i++)
+	{
+		m_hemisphere[i].Draw(m_h_hemisphere);
+	}
+	for (int i = 0; i < m_numobjects[SPRING]; i++)
+	{
+		m_spring[i].Draw(m_h_spring);
+	}
+	for (int i = 0; i < m_numobjects[HOLE]; i++)
+	{
+		m_hole[i].Draw(m_h_hole);
+	}
+	for (int i = 0; i < m_numobjects[TRIANGLE]; i++)
+	{
+		m_triangle[i].Draw(m_h_triangle);
+	}
+}
+
+
+int Map::CreateUpdate()
+{
+	int result = -1;
+	static int mouse_x = 0, mouse_y = 0;
+	static int last_mouse_x = 0, last_mouse_y = 0;
+	if ((GetMouseInput() & MOUSE_INPUT_LEFT)) //マウスの左ボタンが押されているなら
+	{
+		if (!m_mouse_updown) //1回目の処理
+		{
+			//現在のマウスの位置を取得
+			GetMousePoint(&mouse_x, &mouse_y);
+			last_mouse_x = mouse_x;
+			last_mouse_y = mouse_y;
+			//どのオブジェクトが押されたか取得する
+			for (int i = 0; i < m_numobjects[SQUARE]; i++)
+			{
+				if (m_square[i].CheckHitMouse(mouse_x, mouse_y))
+				{
+					nowchoose = i;
+				}
+			}
+			for (int i = 0; i < m_numobjects[HEMISPHERE]; i++)
+			{
+				if (m_hemisphere[i].CheckHitMouse(mouse_x, mouse_y))
+				{
+					nowchoose = i + 10;
+				}
+			}
+			for (int i = 0; i < m_numobjects[SPRING]; i++)
+			{
+				if(m_spring[i].CheckHitMouse(mouse_x, mouse_y))
+				{
+					nowchoose = i + 20;
+				}
+			}
+			for (int i = 0; i < m_numobjects[HOLE]; i++)
+			{
+				if (m_hole[i].CheckHitMouse(mouse_x, mouse_y))
+				{
+					nowchoose = i + 30;
+				}
+			}
+			for (int i = 0; i < m_numobjects[TRIANGLE]; i++)
+			{
+				if (m_triangle[i].CheckHitMouse(mouse_x, mouse_y))
+				{
+					nowchoose = i + 40;
+				}
+			}
+			if (nowchoose != -1)
+			{
+				result = nowchoose;
+			}
+			m_mouse_updown = TRUE;
+		}
+		if (nowchoose != -1)
+		{
+			//現在のマウスの位置を取得
+			GetMousePoint(&mouse_x, &mouse_y);
+			switch (nowchoose / 10) //座標の更新
+			{
+			case SQUARE:
+				m_square[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_square[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
+				m_square[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_square[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y)); 
+				break;
+			case HEMISPHERE:
+				m_hemisphere[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_hemisphere[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
+				m_hemisphere[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_hemisphere[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y));
+				break;
+			case SPRING:
+				m_spring[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_spring[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
+				m_spring[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_spring[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y));
+				break;
+			case HOLE:
+				m_hole[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_hole[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
+				m_hole[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_hole[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y));
+				break;
+			case TRIANGLE:
+				m_triangle[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_triangle[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
+				m_triangle[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_triangle[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y));
+				break;
+			default:
+				break;
+			}
+			last_mouse_x = mouse_x;
+			last_mouse_y = mouse_y;
+		}
+	}
+	else if (m_mouse_updown) //離された時の処理
+	{
+		nowchoose = -1;
+		m_mouse_updown = FALSE;
+	}
+	return result;
 }

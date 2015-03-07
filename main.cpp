@@ -34,15 +34,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
-	map->MakeObject(SQUARE, 100, 400-50, 80, 50);
-	map->MakeObject(HOLE, 300, 400 - 5, 50, 10);
+
+	/*map->MakeObject(SQUARE, 100, 400-50, 80, 50);*/
+	/*map->MakeObject(HOLE, 300, 400 - 5, 50, 10);*/
+	map->MakeObject(TRIANGLE, 100, 400 - 30, 30, 30);
+	map->MakeObject(TRIANGLE, 250, 400 - 40, 40, 40);
+	map->MakeObject(TRIANGLE, 500, 400 - 50, 50, 50);
+
 	while (CheckHitKey(KEY_INPUT_ESCAPE)==0)
 	{
 
 		ClearDrawScreen();
+
 		DrawBox(0, 0, 640, 400,GetColor(255,255,255),TRUE);
-		DrawBox(100, 400 - 50, 180, 400,GetColor(0,255,0),TRUE);
-		DrawOval(325, 400, 25, 5, GetColor(190, 220, 200),TRUE);
+		/*DrawBox(100, 400 - 50, 180, 400,GetColor(0,255,0),TRUE);*/
+		/*DrawOval(325, 400, 25, 5, GetColor(190, 220, 200),TRUE);*/		
+		DrawTriangle(100, 400, 130, 400, 115, 370, GetColor(255, 0, 0), TRUE);
+		DrawTriangle(250, 400, 290, 400, 270, 360, GetColor(255, 0, 0), TRUE);
+		DrawTriangle(500, 400, 550, 400, 525, 350, GetColor(255, 0, 0), TRUE);
 		if (CheckHitKey(KEY_INPUT_Q))
 		{
 			validation.ValidationStart();
@@ -81,9 +90,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		sceneManager.Draw();*/
 
 
+
+		/*sceneManager.Update();
+		sceneManager.Draw();*/
+
 		ScreenFlip();
 
-		if (ProcessMessage() == -1)
+		if (ProcessMessage() == -1 || CheckHitKey(KEY_INPUT_ESCAPE) == 1)
 			break;
 	}
 
