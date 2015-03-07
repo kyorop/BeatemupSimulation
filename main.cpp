@@ -5,7 +5,7 @@
 #include"PlayersValidation.h"
 
 #include"Map.h"
-
+#include "SceneManger.h"
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -30,46 +30,52 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	PlayersValidation validation;//動作確認のクラスの宣言
 	validation.ValidationIni();
 
+	SceneManger sceneManager;
+
 
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
 	while (1)
 	{
 
 		ClearDrawScreen();
-		DrawBox(0, 0, 640, 400,GetColor(255,255,255),TRUE);
-		if (CheckHitKey(KEY_INPUT_Q))
-		{
-			validation.ValidationStart();
-			player.PlayerIni();//プレイヤーの初期化
-		}
-		if (validation.ValidationPlay()){ validation.Validation(&player); }
-		else
-		{
-			DrawString(0, 0, "Qキーを押すとPlayerの動作確認", GetColor(0, 0, 0));
-		}
+//		DrawBox(0, 0, 640, 400,GetColor(255,255,255),TRUE);
+//		if (CheckHitKey(KEY_INPUT_Q))
+//		{
+//			validation.ValidationStart();
+//			player.PlayerIni();//プレイヤーの初期化
+//		}
+//		if (validation.ValidationPlay()){ validation.Validation(&player); }
+//		else
+//		{
+//			DrawString(0, 0, "Qキーを押すとPlayerの動作確認", GetColor(0, 0, 0));
+//		}
+//
+//			
+//		
+//		mouse_flag = GetMouseInput() & MOUSE_INPUT_LEFT;
+//		if (mouse_flag && !mouse_last_flag)
+//		{
+//			map->MakeObject(SPRING, 10, 10, 10, 10);
+//			mouse_last_flag = TRUE;
+//		}
+//		if (!mouse_flag && mouse_last_flag)
+//		{
+//			mouse_last_flag = FALSE;
+//		}
+//
+//		
+//		
+//		
+//		DrawFormatString(0, 64, GetColor(0, 128, 0), "test：%d", map->GetNumObject(SPRING)); //使い方の例
+//		if (map->GetNumObject(SPRING) >= 2)
+//		{
+//			DrawFormatString(0, 80, GetColor(0, 128, 0), "test2：%d", map -> m_spring[1].GetPosX()); //使い方の例
+//		}
+		
 
-			
-		
-		mouse_flag = GetMouseInput() & MOUSE_INPUT_LEFT;
-		if (mouse_flag && !mouse_last_flag)
-		{
-			map->MakeObject(SPRING, 10, 10, 10, 10);
-			mouse_last_flag = TRUE;
-		}
-		if (!mouse_flag && mouse_last_flag)
-		{
-			mouse_last_flag = FALSE;
-		}
+		sceneManager.Update();
+		sceneManager.Draw();
 
-		
-		
-		
-		DrawFormatString(0, 64, GetColor(0, 128, 0), "test：%d", map->GetNumObject(SPRING)); //使い方の例
-		if (map->GetNumObject(SPRING) >= 2)
-		{
-			DrawFormatString(0, 80, GetColor(0, 128, 0), "test2：%d", map -> m_spring[1].GetPosX()); //使い方の例
-		}
-		
 
 		ScreenFlip();
 
