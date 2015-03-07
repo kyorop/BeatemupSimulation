@@ -4,7 +4,7 @@ class Scene_Base;
 class ISceneChanger
 {
 public:
-	enum
+	enum SCENETYPE
 	{
 		NOCHANGE,
 		SCENE_START,

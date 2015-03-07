@@ -7,7 +7,7 @@ class SceneManger
 {
 
 private:
-	int nextScene;
+	SCENETYPE nextScene;
 	Scene_Base *scene;
 public:
 	SceneManger(void);
