@@ -11,6 +11,7 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 
+	SetMainWindowText("");
 	ChangeWindowMode(TRUE);
 
 	if (DxLib_Init() == -1)
@@ -36,11 +37,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Map* map = Map::GetInstance(); //マップオブジェクトの生成
 
-	
+
 	while (CheckHitKey(KEY_INPUT_ESCAPE)==0)
 	{
 
 		ClearDrawScreen();
+
 		//DrawBox(0, 0, 640, 400, GetColor(255, 255, 255), TRUE);
 		//map->MakeObject(SQUARE, 200, 350, 50, 50);
 		//map->Draw();
@@ -77,14 +79,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //			DrawFormatString(0, 80, GetColor(0, 128, 0), "test2：%d", map -> m_spring[1].GetPosX()); //使い方の例
 //		}
 		
-
 		sceneManager.Update();
 		sceneManager.Draw();
 
-
-
-		/*sceneManager.Update();
-		sceneManager.Draw();*/
 
 		ScreenFlip();
 

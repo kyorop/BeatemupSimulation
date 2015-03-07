@@ -4,10 +4,12 @@
 
 void Scene_Mapcreate::UpdateScene()
 {
+
 	if (CheckHitKey(KEY_INPUT_RETURN))
 	{
 		sceneMrg->ChangeScene(ISceneChanger::SCENE_GAME);
 	}
+
 }
 
 Scene_Mapcreate::Scene_Mapcreate()
@@ -30,24 +32,25 @@ Scene_Mapcreate::Scene_Mapcreate()
 	//まず初期設定
 	for (int i = 0; i < numobjects[SQUARE]; i++)
 	{
-		map->MakeObject(SQUARE, 10, itempos_y_lu + (480 - itempos_y_lu - 64) / 2, object_size[SQUARE], object_size[SQUARE]);
+		map->MakeObject(SQUARE, 10, itempos_y_lu + 18, object_size[SQUARE], object_size[SQUARE]);
 	}
 	for (int i = 0; i < numobjects[HEMISPHERE]; i++)
 	{
-		map->MakeObject(HEMISPHERE, 10 + 640 / 5, itempos_y_lu + (480 - itempos_y_lu - 64) / 2, object_size[HEMISPHERE], object_size[HEMISPHERE]);
+		map->MakeObject(HEMISPHERE, 10 + 640 / 5, itempos_y_lu + 18, object_size[HEMISPHERE], object_size[HEMISPHERE]);
 	}
 	for (int i = 0; i < numobjects[SPRING]; i++)
 	{
-		map->MakeObject(SPRING, 10 + (640 * 2) / 5, itempos_y_lu + (480 - itempos_y_lu - 64) / 2, object_size[SPRING], object_size[SPRING]);
+		map->MakeObject(SPRING, 10 + (640 * 2) / 5, itempos_y_lu + 18, object_size[SPRING], object_size[SPRING]);
 	}
 	for (int i = 0; i < numobjects[HOLE]; i++)
 	{
-		map->MakeObject(HOLE, 10 + (640 * 3) / 5, itempos_y_lu + (480 - itempos_y_lu - 64) / 2, object_size[HOLE], object_size[HOLE]);
+		map->MakeObject(HOLE, 10 + (640 * 3) / 5, itempos_y_lu + 18, object_size[HOLE], object_size[HOLE]);
 	}
 	for (int i = 0; i < numobjects[TRIANGLE]; i++)
 	{
-		map->MakeObject(TRIANGLE, 10 + (640 * 4) / 5, itempos_y_lu + (480 - itempos_y_lu - 64) / 2, object_size[TRIANGLE], object_size[TRIANGLE]);
+		map->MakeObject(TRIANGLE, 10 + (640 * 4) / 5, itempos_y_lu + 18, object_size[TRIANGLE], object_size[TRIANGLE]);
 	}
+	h_banner = LoadGraph("./img/cppbanner.png");
 }
 
 void Scene_Mapcreate::Update()
@@ -56,23 +59,47 @@ void Scene_Mapcreate::Update()
 	int result = 0;
 	if ((result = map->CreateUpdate()) != -1)
 	{
-		switch (result / 10)
+		if (result >= 0)
 		{
-		case SQUARE:
-			numobjects_now[SQUARE]--;
-			break;
-		case HEMISPHERE:
-			numobjects_now[HEMISPHERE]--;
-			break;
-		case SPRING:
-			numobjects_now[SPRING]--;
-			break;
-		case HOLE:
-			numobjects_now[HOLE]--;
-			break;
-		case TRIANGLE:
-			numobjects_now[TRIANGLE]--;
-			break;
+			switch (result / 10)
+			{
+			case SQUARE:
+				numobjects_now[SQUARE]--;
+				break;
+			case HEMISPHERE:
+				numobjects_now[HEMISPHERE]--;
+				break;
+			case SPRING:
+				numobjects_now[SPRING]--;
+				break;
+			case HOLE:
+				numobjects_now[HOLE]--;
+				break;
+			case TRIANGLE:
+				numobjects_now[TRIANGLE]--;
+				break;
+			}
+		}
+		else //アイテムボックスから出てない
+		{
+			switch ((result + 10) / (-100))
+			{
+			case SQUARE:
+				numobjects_now[SQUARE]++;
+				break;
+			case HEMISPHERE:
+				numobjects_now[HEMISPHERE]++;
+				break;
+			case SPRING:
+				numobjects_now[SPRING]++;
+				break;
+			case HOLE:
+				numobjects_now[HOLE]++;
+				break;
+			case TRIANGLE:
+				numobjects_now[TRIANGLE]++;
+				break;
+			}
 		}
 	}
 	
@@ -80,17 +107,18 @@ void Scene_Mapcreate::Update()
 
 void Scene_Mapcreate::Draw()
 {
+	DrawBox(0, 0, 640, 480, GetColor(153, 76, 0),TRUE); //背景黒だと分かりにくいのでとりあえず
 	DrawFormatString(0, 0, GetColor(255, 255, 255), "This scene is Mapcreate");
 	DrawLine(0, itempos_y_lu, 640, itempos_y_lu + 2, GetColor(255, 0, 0), 4);
-	//DrawBox(objWindowX1, objWindowY1, objWindowX2, objWindowY2, GetColor(255, 0, 0), false);
 	map->CreateDraw();
 	for (int i = 0; i < TRIANGLE + 1; i++)
 	{
 		if (numobjects_now[i])
 		{
-			DrawFormatString(90 + i * (640 / 5), itempos_y_lu + (480 - itempos_y_lu - 12) / 2, GetColor(128, 0, 128), "×%d", numobjects_now[i]);
+			DrawFormatString(90 + i * (640 / 5), itempos_y_lu + 50 - 6, GetColor(128, 0, 128), "×%d", numobjects_now[i]);
 		}
 	}
+	DrawGraph(0, 480 - 80, h_banner, FALSE);
 }
 
 

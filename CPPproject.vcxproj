@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CollisionHelper.cpp" />
     <ClCompile Include="HemiSphere.cpp" />
     <ClCompile Include="Hole.cpp" />
     <ClCompile Include="main.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="Scene_Start.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionHelper.h" />
     <ClInclude Include="ISceneChanger.h" />
     <ClInclude Include="HemiSphere.h" />
     <ClInclude Include="Hole.h" />

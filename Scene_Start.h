@@ -8,6 +8,8 @@ class Scene_Start
 public:
 	void Update() override;
 	void Draw() override;
-public:
-		
+	Scene_Start();
+private:
+	int h_title; //タイトル画像のハンドル
+	int nowchoose; //0…Start、1…Exit
 };

@@ -1,4 +1,5 @@
 #include "Map.h"
+#include "CollisionHelper.h"
 
 Map* Map::instance;
 
@@ -246,13 +247,40 @@ int Map::CreateUpdate()
 	}
 	else if (m_mouse_updown) //離された時の処理
 	{
-		SetDraggedObject(SQUARE, nowchoose - (nowchoose / 10) * 10);
+		const KindObject droppedType = static_cast<KindObject>(nowchoose / 10);
+		const int droppedI = nowchoose - (nowchoose / 10) * 10;
+		SetDraggedObject(droppedType, droppedI);
 		m_mouse_updown = FALSE;
+		if (mouse_y < small_stage_size_y) //アイテムボックスの中でない
+		{
+			result = -1;
+		}
+		else
+		{
+			switch (nowchoose / 10) //座標を戻す
+			{
+			case SQUARE:
+				m_square[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			case HEMISPHERE:
+				m_hemisphere[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			case SPRING:
+				m_spring[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			case HOLE:
+				m_hole[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			case TRIANGLE:
+				m_triangle[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+				break;
+			default:
+				break;
+			}
+
+			result = nowchoose * (-10) - 10; //特殊な処理
+		}
 		nowchoose = -1;
-	}
-	if (mouse_y < 308) //アイテムボックスの中でない
-	{
-		result = -1;
 	}
 	return result;
 }
@@ -260,38 +288,83 @@ int Map::CreateUpdate()
 
 void Map::SetDraggedObject(KindObject type, int i)
 {
-	Object* object=nullptr;
-	//	if (nanimonai)
+	const int x1 = GetObj(type, i)->GetDrawPosX();
+	const int x2 = x1 + GetObj(type, i)->GetDrawSizeWidth();
+	const int lowerY = GetObj(type, i)->GetDrawPosY() + GetObj(type, i)->GetDrawSizeHigh();
+	const int highestY = GetHighestY(x1, x2, lowerY);
+	Object* object = GetObj(type, i);
+	if (object == nullptr)
+		return;
+	if (lowerY > small_stage_size_y)
 	{
-		switch (type)
+		return;
+	}
+	else if(highestY == small_stage_size_y)//下に何もオブジェクトが無い時
+	{
+		const int height = object->GetDrawSizeHigh();
+		object->SetDrawPosY(small_stage_size_y - height);
+		object->PutOnGround();
+	}
+	else if (lowerY <= highestY)//下にオブジェクトがあるとき
+	{
+		//落とし穴は重なってたら無条件で、リセット
+		if (type == HOLE)
 		{
-		case SQUARE:
-			object = &m_square[i];
-			break;
-		case HEMISPHERE:
-			object = &m_hemisphere[i];
-			break;
-		case SPRING: 
-			object = &m_spring[i];
-			break;
-		case HOLE: 
-			object = &m_hole[i];
-			break;
-		case TRIANGLE: 
-			object = &m_triangle[i];
-			break;
-		default:
-			break;
+			object->ResetDrawPos();
+			return;
 		}
-		if (object != nullptr)
+
+		const int height = object->GetDrawSizeHigh();
+		object->SetDrawPosY(highestY - height);
+		object->PutOnGround();
+	}
+	else//すでにあるオブジェクトより下にドロップした時
+	{
+		object->ResetDrawPos();
+	}
+}
+
+int Map::GetHighestY(int x1, int x2, int lowerY)
+{
+	int highestY=small_stage_size_y;
+
+	for (int type = SQUARE; type <= TRIANGLE; type++)
+	{
+		for (int i = 0; i < m_numobjects[type]; i++)
 		{
-			const int height = object->GetDrawSizeHigh();
-			object->SetDrawPosY(small_stage_size_y - height);
+			if (GetObj(static_cast<KindObject>(type), i)->IsSet())
+			{
+				Object* object = GetObj(static_cast<KindObject>(type), i);
+				const int doneX1 = object->GetDrawPosX();
+				const int doneX2 = doneX1 + object->GetDrawSizeWidth();
+				const int doneUpperY = object->GetDrawPosY();
+				if (CheckHitLine(x1, x2, doneX1, doneX2))
+				{
+					if (highestY > doneUpperY)
+						highestY = doneUpperY;
+				}
+			}
 		}
 	}
-	//	else
+
+	return highestY;
+}
+
+Object* Map::GetObj(KindObject type, const int i)
+{
+	switch (type)
 	{
-
+	case SQUARE: 
+		return &m_square[i];
+	case HEMISPHERE: 
+		return &m_hemisphere[i];
+	case SPRING: 
+		return &m_spring[i];
+	case HOLE:
+		return &m_hole[i];
+	case TRIANGLE: 
+		return &m_triangle[i];
+	default: 
+		return nullptr;
 	}
-
 }
