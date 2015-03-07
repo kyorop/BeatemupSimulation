@@ -212,15 +212,26 @@ int Map::CreateUpdate()
 			}
 			m_mouse_updown = TRUE;
 		}
+
+		//既に設置されたオブジェクトはもう動かないようにする
+		if (GetObj(static_cast<KindObject>(nowchoose / 10), nowchoose % 10) != nullptr && GetObj(static_cast<KindObject>(nowchoose / 10), nowchoose % 10)->IsSet())
+		{
+			nowchoose = -1;
+			result = -1;
+		}
+		
 		if (nowchoose != -1)
 		{
+			Object* object = GetObj(static_cast<KindObject>(nowchoose / 10), nowchoose - (nowchoose / 10) * 10);
+			if (object == nullptr)
+				return result;
 			//現在のマウスの位置を取得
 			GetMousePoint(&mouse_x, &mouse_y);
 			switch (nowchoose / 10) //座標の更新
 			{
 			case SQUARE:
 				m_square[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_square[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
-				m_square[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_square[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y)); 
+				m_square[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_square[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y));
 				break;
 			case HEMISPHERE:
 				m_hemisphere[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_hemisphere[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
@@ -249,6 +260,7 @@ int Map::CreateUpdate()
 	{
 		const KindObject droppedType = static_cast<KindObject>(nowchoose / 10);
 		const int droppedI = nowchoose - (nowchoose / 10) * 10;
+		Object* object = GetObj(droppedType, droppedI);
 		SetDraggedObject(droppedType, droppedI);
 		m_mouse_updown = FALSE;
 		if (mouse_y < small_stage_size_y) //アイテムボックスの中でない
@@ -295,11 +307,13 @@ void Map::SetDraggedObject(KindObject type, int i)
 	Object* object = GetObj(type, i);
 	if (object == nullptr)
 		return;
+
 	if (lowerY > small_stage_size_y)
 	{
 		return;
 	}
-	else if(highestY == small_stage_size_y)//下に何もオブジェクトが無い時
+	
+	if(highestY == small_stage_size_y)//下に何もオブジェクトが無い時
 	{
 		const int height = object->GetDrawSizeHigh();
 		object->SetDrawPosY(small_stage_size_y - height);
