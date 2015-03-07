@@ -15,10 +15,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	bool PlayMode=false;
 	PLAYER Pl;
 	Pl.PlayerIni(50.0,50.0);
+<<<<<<< HEAD
+	/*Pl.Vx = 3.0;*/
+=======
 	Pl.Vx = 2.0;
 	
 	int Time = 60;
 
+>>>>>>> 4e63279ecf17cb62c7d02f6f9791cdef454685a6
 	while (1)
 	{
 
@@ -42,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (Time > 0)
 			{
 				Time--;
-		}
+			}
 			else
 			{
 				Time = 60;

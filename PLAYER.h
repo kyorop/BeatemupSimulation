@@ -6,7 +6,7 @@ class PLAYER
 public:
 	int Graph[6];//プレイヤーキャラクターの画像を収納
 	int GraphChangeTime＿Max, GraphChangeTime＿Now, GraphNum;//画像が切り替わる
-	int Type,XSize, YSize;//プレイヤーキャラクターのタイプ、横幅、縦幅を収納
+	int XSize, YSize;//プレイヤーキャラクターのタイプ、横幅、縦幅を収納
 	double X, Y;//プレイヤーキャラクターのX座標とY座標
 	double Vx, Vy;//プレイヤーキャラクターのX軸とY軸に対応するスピード
 	double Ax, Ay;//プレイヤーキャラクターのX軸とY軸に対応する加速度
