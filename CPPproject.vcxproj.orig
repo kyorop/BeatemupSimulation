@@ -89,33 +89,49 @@
     <ClCompile Include="HemiSphere.cpp" />
     <ClCompile Include="Hole.cpp" />
     <ClCompile Include="main.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Object_Interface.cpp" />
+=======
+>>>>>>> fe4dab43c341a28746e29d5adf0b870caf886d77
     <ClCompile Include="PLAYER.cpp" />
-    <ClCompile Include="Spring.cpp" />
-    <ClCompile Include="Square.cpp" />
-    <ClCompile Include="Triangle.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="SceneManger.cpp" />
     <ClCompile Include="Scene_Base.cpp" />
     <ClCompile Include="Scene_Game.cpp" />
     <ClCompile Include="Scene_Gameover.cpp" />
     <ClCompile Include="Scene_Mapcreate.cpp" />
-    <ClCompile Include="Scene_Start.cpp" />  </ItemGroup>
+    <ClCompile Include="Scene_Start.cpp" />
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISceneChanger.h" />
-    <ClInclude Include="HemiSphere.h" />
-    <ClInclude Include="Hole.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="Object_Interface.h" />
     <ClInclude Include="PLAYER.h" />
-    <ClInclude Include="Spring.h" />
-    <ClInclude Include="Square.h" />
-    <ClInclude Include="Triangle.h" />
     <ClInclude Include="SceneManger.h" />
     <ClInclude Include="Scene_Base.h" />
     <ClInclude Include="Scene_Game.h" />
     <ClInclude Include="Scene_Gameover.h" />
     <ClInclude Include="Scene_Mapcreate.h" />
     <ClInclude Include="Scene_Start.h" />
+=======
+    <ClCompile Include="Spring.cpp" />
+    <ClCompile Include="Square.cpp" />
+    <ClCompile Include="Triangle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+<<<<<<< HEAD
+    <ClInclude Include="HemiSphere.h" />
+    <ClInclude Include="Hole.h" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Object_Interface.h" />
+=======
+>>>>>>> fe4dab43c341a28746e29d5adf0b870caf886d77
+    <ClInclude Include="PLAYER.h" />
+    <ClInclude Include="Spring.h" />
+    <ClInclude Include="Square.h" />
+    <ClInclude Include="Triangle.h" />
+>>>>>>> 533afb99621b8ecda024060c6a7da528e6932c53
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
