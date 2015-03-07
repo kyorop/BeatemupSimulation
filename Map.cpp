@@ -246,7 +246,7 @@ int Map::CreateUpdate()
 	}
 	else if (m_mouse_updown) //ó£Ç≥ÇÍÇΩéûÇÃèàóù
 	{
-		SetDraggedObject(SQUARE, nowchoose - (nowchoose / 10) * 10);
+		SetDraggedObject(static_cast<KindObject>(nowchoose / 10), nowchoose - (nowchoose / 10) * 10);
 		m_mouse_updown = FALSE;
 		nowchoose = -1;
 	}
@@ -260,9 +260,9 @@ int Map::CreateUpdate()
 
 void Map::SetDraggedObject(KindObject type, int i)
 {
-	Object* object=nullptr;
 	//	if (nanimonai)
 	{
+		Object* object = nullptr;
 		switch (type)
 		{
 		case SQUARE:
