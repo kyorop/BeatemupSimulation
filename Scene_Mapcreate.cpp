@@ -88,3 +88,18 @@ void Scene_Mapcreate::Draw()
 		}
 	}
 }
+
+void Scene_Mapcreate::SetDraggedObject(KindObject type, int index, int x, int y)
+{
+
+//	if (nanimonai)
+	{
+		Map::GetInstance()->m_hemisphere[index].SetDrawPosX(x);
+		Map::GetInstance()->m_hemisphere[index].SetDrawPosY(y);
+	}
+//	else
+	{
+		
+	}
+
+}
