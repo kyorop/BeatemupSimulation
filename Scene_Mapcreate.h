@@ -5,7 +5,7 @@
 class Scene_Mapcreate
 	:public Scene_Base
 {
-	const int itempos_y_lu = 308;
+	const int itempos_y_lu = 300;
 
 	Map* map;
 
@@ -19,5 +19,5 @@ private:
 	int numobjects_now[TRIANGLE + 1]; //各オブジェクトの残り
 	int object_size[TRIANGLE + 1]; //各オブジェクトの1辺の大きさ
 
-	void SetDraggedObject(KindObject type, int index, int x, int y);
+	
 };

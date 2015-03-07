@@ -213,6 +213,8 @@ int Map::CreateUpdate()
 		}
 		if (nowchoose != -1)
 		{
+			//現在のマウスの位置を取得
+			GetMousePoint(&mouse_x, &mouse_y);
 			switch (nowchoose / 10) //座標の更新
 			{
 			case SQUARE:
@@ -220,22 +222,72 @@ int Map::CreateUpdate()
 				m_square[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_square[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y)); 
 				break;
 			case HEMISPHERE:
+				m_hemisphere[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_hemisphere[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
+				m_hemisphere[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_hemisphere[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y));
 				break;
 			case SPRING:
+				m_spring[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_spring[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
+				m_spring[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_spring[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y));
 				break;
 			case HOLE:
+				m_hole[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_hole[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
+				m_hole[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_hole[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y));
 				break;
 			case TRIANGLE:
+				m_triangle[nowchoose - (nowchoose / 10) * 10].SetDrawPosX(m_triangle[nowchoose - (nowchoose / 10) * 10].GetDrawPosX() + (mouse_x - last_mouse_x));
+				m_triangle[nowchoose - (nowchoose / 10) * 10].SetDrawPosY(m_triangle[nowchoose - (nowchoose / 10) * 10].GetDrawPosY() + (mouse_y - last_mouse_y));
 				break;
 			default:
 				break;
 			}
+			last_mouse_x = mouse_x;
+			last_mouse_y = mouse_y;
 		}
 	}
 	else if (m_mouse_updown) //離された時の処理
 	{
-		nowchoose = -1;
+		SetDraggedObject(SQUARE, nowchoose - (nowchoose / 10) * 10);
 		m_mouse_updown = FALSE;
+		nowchoose = -1;
 	}
 	return result;
+}
+
+
+void Map::SetDraggedObject(KindObject type, int i)
+{
+	Object* object=nullptr;
+	//	if (nanimonai)
+	{
+		switch (type)
+		{
+		case SQUARE:
+			object = &m_square[i];
+			break;
+		case HEMISPHERE:
+			object = &m_hemisphere[i];
+			break;
+		case SPRING: 
+			object = &m_spring[i];
+			break;
+		case HOLE: 
+			object = &m_hole[i];
+			break;
+		case TRIANGLE: 
+			object = &m_triangle[i];
+			break;
+		default:
+			break;
+		}
+		if (object != nullptr)
+		{
+			const int height = object->GetDrawSizeHigh();
+			object->SetDrawPosY(small_stage_size_y - height);
+		}
+	}
+	//	else
+	{
+
+	}
+
 }
