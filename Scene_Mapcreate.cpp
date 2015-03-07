@@ -17,6 +17,10 @@ Scene_Mapcreate::Scene_Mapcreate()
 	groundY2(groundY1)
 {
 	handle_square = LoadGraph("img/square.png");
+	handle_hemisphere = LoadGraph("img/hemisphere.png");
+	handle_hole = LoadGraph("img/hole.png");
+	handle_spring = LoadGraph("img/spring.png");
+	handle_triangle = LoadGraph("img/triangle.png");
 }
 
 void Scene_Mapcreate::Update()
