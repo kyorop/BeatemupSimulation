@@ -88,3 +88,5 @@ void Scene_Mapcreate::Draw()
 		}
 	}
 }
+
+
