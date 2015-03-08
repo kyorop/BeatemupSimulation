@@ -333,7 +333,7 @@ bool Map::SetDraggedObject(KindObject type, int i)
 		}
 
 		//落とし穴の上に置こうとしたらリセット
-		if (highestObj->GetObjectType() == HOLE)
+		if (highestObj->GetObjectType() == HOLE || highestObj->GetObjectType() == SPRING)
 		{
 			object->ResetDrawPos();
 			return false;

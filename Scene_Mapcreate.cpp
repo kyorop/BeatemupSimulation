@@ -23,7 +23,7 @@ Scene_Mapcreate::Scene_Mapcreate()
 	//とりあえずNORMAL?
 	numobjects_now[SQUARE] = numobjects[SQUARE] = 3;
 	numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE] = 2;
-	numobjects_now[SPRING] = numobjects[SPRING] = 0;
+	numobjects_now[SPRING] = numobjects[SPRING] = 1;
 	numobjects_now[HOLE] = numobjects[HOLE] = 1;
 	numobjects_now[TRIANGLE] = numobjects[TRIANGLE] = 3;
 	object_size[SQUARE] = 64;
