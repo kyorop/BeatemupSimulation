@@ -3,7 +3,7 @@
 #include"Map.h"
 #include<math.h>
 
-#define UNDERDRAWLINE 300
+#define UNDERDRAWLINE 320
 #define MAXJUMP 4.2
 #define MAXJUMP2 5.0
 #define PI 3.141592
@@ -13,7 +13,7 @@ void PLAYER::PlayerIni()
 {
 	
 	AddX = 1; AddY = 0; dropAddY=0.12;
-	penaltyHemisphere = false;
+	touchHemisphere = false;
 	GraphNum = 1;
 	GraphChangeTime_Max = 80;
 	TimeMax = 20;
@@ -27,7 +27,7 @@ void PLAYER::PlayerIni()
 	MaxY = Y;
 }
 
-void PLAYER::PlayerDraw()
+void PLAYER::PlayerDraw(int leftX)
 {
 	for (int r = 0; r < map->GetNumObject(HOLE); r++)
 	{
@@ -50,7 +50,8 @@ void PLAYER::PlayerDraw()
 	{
 		SetDrawArea(0, 0, 640, UNDERDRAWLINE);
 	}
-	DrawGraph((int)X, (int)Y, Graph[GraphNum], TRUE);
+
+	DrawGraph((int)X-leftX, (int)Y, Graph[GraphNum], TRUE);
 	SetDrawAreaFull();
 }
 
@@ -90,26 +91,37 @@ void PLAYER::PlayerMove()
 			{
 				AddY = -2;
 				AddX = -AddX;
-				penaltyHemisphere = true;
+				touchHemisphere = true;
 			}
-			
 		}
 	}
-		X += AddX; Y += AddY;
-		if (Y < MaxY)MaxY = Y;
-		if (AddY>MAXJUMP2)AddY = MAXJUMP2;
-		if (AddY < -MAXJUMP2)AddY = -MAXJUMP2;
-		if (OnGround == false)
-		{
-			AddY += dropAddY;
-		}
-	
-	
-	
+	X += AddX;
+	Y += AddY;
+	if (Y < MaxY)MaxY = Y;
+	if (AddY>MAXJUMP2)AddY = MAXJUMP2;
+	if (AddY < -MAXJUMP2)AddY = -MAXJUMP2;
+	if (touchHemisphere&&OnGround)
+	{
+		AddX = 1.0;
+	}
+	if (OnGround == false)
+	{
+		AddY += dropAddY;
+	}
 }
 
 bool PLAYER::CheckGameover()
 {
+	for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
+	{
+		if (GetPosX() > map->m_triangle[r].GetPosX() + map->m_triangle[r].GetSizeWidth() / 2 - map->m_triangle[r].GetSizeWidth() / 4
+			&& GetPosX() < map->m_triangle[r].GetPosX() + map->m_triangle[r].GetSizeWidth() / 2 + map->m_triangle[r].GetSizeWidth() / 4
+			&& GetPosY() + GetHeight() > map->m_triangle[r].GetPosY()
+			&& GetPosY() < map->m_triangle[r].GetPosY())
+		{
+			return true;
+		}
+	}
 	for (int r = 0; r < map->GetNumObject(SQUARE); r++)
 	{
 		if (GetPosX() > map->m_square[r].GetPosX() - GetWidht()
@@ -120,17 +132,8 @@ bool PLAYER::CheckGameover()
 			return true;
 		}
 	}
-	for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
-	{
-		if (false)
-		{
-			return true;
-		}
-	}
-	if (penaltyHemisphere&&OnGround)
-	{
-		return true;
-	}
+	
+	
 	for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
 	{
 		if (GetPosX() > map->m_triangle[r].GetPosX() - GetWidht()

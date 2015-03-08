@@ -32,8 +32,14 @@ void Object::SetObject(int posx, int posy, int sizex, int sizey)
 	}
 	m_draw_pos_x = m_pos_x = posx;
 	m_draw_pos_y = m_pos_y = posy;
-	m_draw_size_x = m_size_x = sizex;
-	m_draw_size_y = m_size_y = sizey;
+	if (sizex > 0)
+	{
+		m_draw_size_x = m_size_x = sizex;
+	}
+	if (sizey > 0)
+	{
+		m_draw_size_y = m_size_y = sizey;
+	}
 }
 
 
