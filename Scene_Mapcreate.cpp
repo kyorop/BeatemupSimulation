@@ -21,11 +21,11 @@ Scene_Mapcreate::Scene_Mapcreate()
 	map = Map::GetInstance();
 	//ここでswitch文で難易度設定
 	//とりあえずNORMAL?
-	numobjects_now[SQUARE] = numobjects[SQUARE] = 3;
-	numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE] = 2;
+	numobjects_now[SQUARE] = numobjects[SQUARE] = 1;
+	numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE] = 1;
 	numobjects_now[SPRING] = numobjects[SPRING] = 1;
 	numobjects_now[HOLE] = numobjects[HOLE] = 1;
-	numobjects_now[TRIANGLE] = numobjects[TRIANGLE] = 3;
+	numobjects_now[TRIANGLE] = numobjects[TRIANGLE] = 1;
 	object_size[SQUARE] = 64;
 	object_size[HEMISPHERE] = 64;
 	object_size[SPRING] = 64;

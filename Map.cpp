@@ -459,22 +459,22 @@ void Map::SetPosAll()
 	//全てのオブジェクトの位置調整
 	for (int i = 0; i < m_numobjects[SQUARE]; i++)
 	{
-		m_square[i].SetObject(m_square[i].GetDrawPosX() * stage_size_x / 640, m_square[i].GetDrawPosY() *stage_size_x / 300);
+		m_square[i].SetObject(m_square[i].GetDrawPosX() * stage_size_x / 640, m_square[i].GetDrawPosY() *stage_size_y / 300);
 	}
 	for (int i = 0; i < m_numobjects[HEMISPHERE]; i++)
 	{
-		m_hemisphere[i].SetObject(m_hemisphere[i].GetDrawPosX() * stage_size_x / 640, m_hemisphere[i].GetDrawPosY() *stage_size_x / 300);
+		m_hemisphere[i].SetObject(m_hemisphere[i].GetDrawPosX() * stage_size_x / 640, m_hemisphere[i].GetDrawPosY() *stage_size_y / 300);
 	}
 	for (int i = 0; i < m_numobjects[SPRING]; i++)
 	{
-		m_spring[i].SetObject(m_spring[i].GetDrawPosX() * stage_size_x / 640, m_spring[i].GetDrawPosY() *stage_size_x / 300);
+		m_spring[i].SetObject(m_spring[i].GetDrawPosX() * stage_size_x / 640, m_spring[i].GetDrawPosY() *stage_size_y / 300);
 	}
 	for (int i = 0; i < m_numobjects[HOLE]; i++)
 	{
-		m_hole[i].SetObject(m_hole[i].GetDrawPosX() * stage_size_x / 640, m_hole[i].GetDrawPosY() *stage_size_x / 300);
+		m_hole[i].SetObject(m_hole[i].GetDrawPosX() * stage_size_x / 640, m_hole[i].GetDrawPosY() *stage_size_y / 300);
 	}
 	for (int i = 0; i < m_numobjects[TRIANGLE]; i++)
 	{
-		m_triangle[i].SetObject(m_triangle[i].GetDrawPosX() * stage_size_x / 640, m_triangle[i].GetDrawPosY() *stage_size_x / 300);
+		m_triangle[i].SetObject(m_triangle[i].GetDrawPosX() * stage_size_x / 640, m_triangle[i].GetDrawPosY() *stage_size_y / 300);
 	}
 }

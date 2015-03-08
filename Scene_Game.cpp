@@ -38,7 +38,7 @@ void Scene_Game::Draw()
 			map->m_square[r].GetPosY(),
 			map->m_square[r].GetPosX() + map->m_square[r].GetSizeWidth() - leftX,
 			map->m_square[r].GetPosY() + map->m_square[r].GetSizeHigh(),
-			map->m_h_square, FALSE);
+			map->m_h_square, TRUE);
 	}
 	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
 	{
@@ -46,7 +46,7 @@ void Scene_Game::Draw()
 			map->m_hemisphere[r].GetPosY(),
 			map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth() - leftX,
 			map->m_hemisphere[r].GetPosY() + map->m_hemisphere[r].GetSizeHigh(),
-			map->m_h_hemisphere, FALSE);
+			map->m_h_hemisphere, TRUE);
 	}
 	for (int r = 0; r < map->GetNumObject(SPRING); r++)
 	{
@@ -54,7 +54,7 @@ void Scene_Game::Draw()
 			map->m_spring[r].GetPosY(),
 			map->m_spring[r].GetPosX() + map->m_spring[r].GetSizeWidth() - leftX,
 			map->m_spring[r].GetPosY() + map->m_spring[r].GetSizeHigh(),
-			map->m_h_spring, FALSE);
+			map->m_h_spring, TRUE);
 	}
 	for (int r = 0; r < map->GetNumObject(HOLE); r++)
 	{
@@ -62,7 +62,7 @@ void Scene_Game::Draw()
 			map->m_hole[r].GetPosY(),
 			map->m_hole[r].GetPosX() + map->m_hole[r].GetSizeWidth() - leftX,
 			map->m_hole[r].GetPosY() + map->m_hole[r].GetSizeHigh(),
-			map->m_h_hole, FALSE);
+			map->m_h_hole, TRUE);
 	}	
 	for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
 	{
@@ -70,7 +70,7 @@ void Scene_Game::Draw()
 			map->m_triangle[r].GetPosY(),
 			map->m_triangle[r].GetPosX() + map->m_triangle[r].GetSizeWidth() - leftX,
 			map->m_triangle[r].GetPosY() + map->m_triangle[r].GetSizeHigh(),
-			map->m_h_triangle, FALSE);
+			map->m_h_triangle, TRUE);
 	}
 
 }
