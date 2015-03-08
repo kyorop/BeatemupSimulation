@@ -30,6 +30,7 @@ public:
 	bool CheckHitMouse(int mouse_x, int mouse_y); //マウスとこのオブジェクトの位置が被っているかどうかを返す。被っているならTRUE
 	bool IsSet(){ return isSet; };
 	void PutOnGround(){ isSet = true; }
+	void ButOnGround(){ isSet = FALSE; }
 	void ResetDrawPos();
 	void ReminSize(int size_x, int size_y); //DrawSizeの縮小。size_yは実際の全画面のxのサイズ
 	void RemaxSize(); //DrawSizeの大きさと座標を元に戻す

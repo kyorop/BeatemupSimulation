@@ -18,4 +18,5 @@ public:
 private:
 	int background;
 	int h_ground;
+	int FlagGraph;
 };

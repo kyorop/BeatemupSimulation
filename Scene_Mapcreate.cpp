@@ -17,7 +17,9 @@ void Scene_Mapcreate::UpdateScene()
 			map->SetPosAll(); //位置を調整する
 			sceneMrg->ChangeScene(ISceneChanger::SCENE_GAME); //ゲーム画面へ 
 		}
+		
 	}
+	
 }
 
 Scene_Mapcreate::Scene_Mapcreate()
@@ -25,12 +27,39 @@ Scene_Mapcreate::Scene_Mapcreate()
 
 	map = Map::GetInstance();
 	//ここでswitch文で難易度設定
-	//とりあえずNORMAL?
-	numobjects_now[SQUARE] = numobjects[SQUARE] = 1;
-	numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE] = 1;
-	numobjects_now[SPRING] = numobjects[SPRING] = 1;
-	numobjects_now[HOLE] = numobjects[HOLE] = 1;
-	numobjects_now[TRIANGLE] = numobjects[TRIANGLE] = 1;
+	switch (map->GetDifficulty())
+	{
+	case 0:
+		numobjects_now[SQUARE] = numobjects[SQUARE] = 1 + GetRand(1);
+		numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE] = 1 + GetRand(1);
+		numobjects_now[SPRING] = numobjects[SPRING] = 1 + GetRand(1);
+		numobjects_now[HOLE] = numobjects[HOLE] = 0;
+		numobjects_now[TRIANGLE] = numobjects[TRIANGLE] = 0;
+		break;
+	case 1:
+		numobjects_now[SQUARE] = numobjects[SQUARE] = 1 + GetRand(2);
+		numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE] = 1 + GetRand(2);
+		numobjects_now[SPRING] = numobjects[SPRING] = 1 + GetRand(2);
+		numobjects_now[HOLE] = numobjects[HOLE] = 1 + GetRand(1);
+		numobjects_now[TRIANGLE] = numobjects[TRIANGLE] = 1 + GetRand(1);
+		break;
+	case 2:
+		numobjects_now[SQUARE] = numobjects[SQUARE] = 2 + GetRand(3);
+		numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE] = 2 + GetRand(1);
+		numobjects_now[SPRING] = numobjects[SPRING] = GetRand(3);
+		numobjects_now[HOLE] = numobjects[HOLE] = 2 + GetRand(2);
+		numobjects_now[TRIANGLE] = numobjects[TRIANGLE] = 2 + GetRand(2);
+		break;
+	case 3:
+		numobjects_now[SQUARE] = numobjects[SQUARE] = 2 + GetRand(2);
+		numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE] = 2 + GetRand(2);
+		numobjects_now[SPRING] = numobjects[SPRING] = 1;
+		numobjects_now[HOLE] = numobjects[HOLE] = 4 + GetRand(1);
+		numobjects_now[TRIANGLE] = numobjects[TRIANGLE] = 4 + GetRand(1);
+		break;
+	default:
+		break;
+	}
 	object_size[SQUARE] = 64;
 	object_size[HEMISPHERE] = 64;
 	object_size[SPRING] = 64;
@@ -63,13 +92,16 @@ Scene_Mapcreate::Scene_Mapcreate()
 	h_startButton = LoadGraph("img/startbutton.png");
 	h_background = LoadGraph("img/background.png");
 	h_ground = LoadGraph("img/ground.png");
+	h_reset = LoadGraph("./img/resetbutton.png");
 	finish_flag = FALSE;
+	reset_flag = FALSE;
 }
 
 void Scene_Mapcreate::Update()
 {
 	UpdateScene();
 	int result = 0;
+	int mousex = 0, mousey = 0;
 	if (numobjects_now[SQUARE] || numobjects_now[HEMISPHERE] || numobjects_now[SPRING] || numobjects_now[HOLE] || numobjects_now[TRIANGLE] || finish_flag ||map->m_mouse_updown)
 	{
 	}
@@ -128,6 +160,51 @@ void Scene_Mapcreate::Update()
 			}
 		}
 	}
+
+	if (GetMouseInput() & MOUSE_INPUT_LEFT)
+	{
+		GetMousePoint(&mousex, &mousey);
+	}
+	if ((574 <= mousex && 638 >= mousex) &&
+		(240 <= mousey && 263 >= mousey) && !reset_flag)
+	{
+		//各オブジェクトを元に戻す
+		for (int i = 0; i < numobjects[SQUARE]; i++)
+		{
+			map->m_square[i].RemaxSize();
+			map->m_square[i].ButOnGround();
+		}
+		numobjects_now[SQUARE] = numobjects[SQUARE];
+		for (int i = 0; i < numobjects[HEMISPHERE]; i++)
+		{
+			map->m_hemisphere[i].RemaxSize(); 
+			map->m_hemisphere[i].ButOnGround();
+		}
+		numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE];
+		for (int i = 0; i < numobjects[SPRING]; i++)
+		{
+			map->m_spring[i].RemaxSize();
+			map->m_spring[i].ButOnGround();
+		}
+		numobjects_now[SPRING] = numobjects[SPRING];
+		for (int i = 0; i < numobjects[HOLE]; i++)
+		{
+			map->m_hole[i].RemaxSize();
+			map->m_hole[i].ButOnGround();
+		}
+		numobjects_now[HOLE] = numobjects[HOLE];
+		for (int i = 0; i < numobjects[TRIANGLE]; i++)
+		{
+			map->m_triangle[i].RemaxSize();
+			map->m_triangle[i].ButOnGround();
+		}
+		numobjects_now[TRIANGLE] = numobjects[TRIANGLE];
+		reset_flag = TRUE;
+	}
+	else if (reset_flag && !(GetMouseInput()&MOUSE_INPUT_LEFT))
+	{
+		reset_flag = FALSE;
+	}
 	
 }
 
@@ -153,6 +230,7 @@ void Scene_Mapcreate::Draw()
 //		DrawFormatString(40, 320, GetColor(128, 0, 128), "Please, Enter!");
 		DrawGraph(startButtonX, startButtonY, h_startButton, false);
 	}
+	DrawExtendGraph(574, 240, 636, 263, h_reset, false); //リセットボタンの表示
 }
 
 

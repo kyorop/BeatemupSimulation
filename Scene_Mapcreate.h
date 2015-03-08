@@ -23,10 +23,13 @@ private:
 	int h_startButton;
 	int h_background;
 	int h_ground;
+	int h_reset;
 	const int stage_size_x = 1000, stage_size_y = 480; //ステージのサイズ
 	const int startButtonX = 320-176/2;
 	const int startButtonY = 350-51/2;
 	const int startButtonWidth = 176; 
 	const int startButtonHeight = 51;
 	bool finish_flag; //オブジェクトを置き終わったフラグ
+	bool reset_flag; //リセットしたことを表すフラグ
+	int temp_num[5];
 };

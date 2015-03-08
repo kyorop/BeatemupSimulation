@@ -9,6 +9,10 @@ void Scene_Game::UpdateScene()
 	{
 		sceneMrg->ChangeScene(ISceneChanger::SCENE_GAMEOVER);
 	}
+	if (player->CheckGameClear(950))
+	{
+		sceneMrg->ChangeScene(ISceneChanger::SCENE_GAMEOVER);
+	}
 }
 
 void Scene_Game::Initialize()
@@ -18,6 +22,7 @@ void Scene_Game::Initialize()
 	map = Map::GetInstance();
 	background = LoadGraph("img/background.png");
 	h_ground = LoadGraph("img/ground.png");
+	FlagGraph = LoadGraph("img/Flag.png");
 	leftX = 0;
 }
 void Scene_Game::Update()
@@ -32,6 +37,7 @@ void Scene_Game::Update()
 void Scene_Game::Draw()
 {
 	backGroundDraw();
+	DrawGraph(950-leftX, 30, FlagGraph, TRUE);
 	player->PlayerDraw(leftX);
 	for (int r = 0; r < map->GetNumObject(SQUARE); r++)
 	{
