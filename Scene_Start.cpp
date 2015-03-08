@@ -38,9 +38,6 @@ void Scene_Start::Update()
 void Scene_Start::Draw()
 {
 	DrawGraph(0, 0, h_title, FALSE);
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "Push enter");
-
-
 	DrawFormatString(205 - (nowchoose ? 0 : 20), 278, GetColor(0, 0, 0), "Start");
 	DrawFormatString(205 - (nowchoose ? 20 : 0), 302, GetColor(0, 0, 0), "Exit");
 }
