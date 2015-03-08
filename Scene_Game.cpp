@@ -26,7 +26,7 @@ void Scene_Game::Update()
 	player->DoJump();
 	player->GraphNumChange();
 	player->PlayerMove();
-	if (player->GetPosX() >= 324)leftX += player->GetAddX();
+	if (player->GetPosX() >= 324)leftX += (int)player->GetAddX();
 }
 void Scene_Game::Draw()
 {
