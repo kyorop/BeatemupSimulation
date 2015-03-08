@@ -15,6 +15,7 @@ private:
 	int GraphChangeTime_Now;
 	bool OnGround;
 	double MaxY;
+	bool IrregularActions;
 	Map* map;
 
 public:

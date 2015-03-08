@@ -6,7 +6,7 @@
 #define UNDERDRAWLINE 300
 #define MAXJUMP 4.2
 #define MAXJUMP2 5.0
-
+#define PI 3.141592
 
 
 void PLAYER::PlayerIni()
@@ -76,16 +76,42 @@ void PLAYER::GraphNumChange()
 
 void PLAYER::PlayerMove()
 {
-	X += AddX; Y += AddY;
-	if (Y < MaxY)MaxY = Y;
-
-	if (AddY>MAXJUMP2)AddY = MAXJUMP2;
-	if (AddY < -MAXJUMP2)AddY = -MAXJUMP2;
-
-	if (OnGround==false)
+	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
 	{
-		AddY += dropAddY;
+		if (GetPosX() + GetWidht() / 2 > map->m_hemisphere[r].GetPosX()
+			&& GetPosX() + GetWidht() / 2< map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth()
+			&& GetPosY() + GetHeight() > map->m_hemisphere[r].GetPosY()
+			&& GetPosY() + GetHeight() < map->m_hemisphere[r].GetPosY() + map->m_hemisphere[r].GetSizeHigh())
+		{
+			IrregularActions = true;
+		}
 	}
+	if (IrregularActions == false)
+	{
+		X += AddX; Y += AddY;
+		if (Y < MaxY)MaxY = Y;
+		if (AddY>MAXJUMP2)AddY = MAXJUMP2;
+		if (AddY < -MAXJUMP2)AddY = -MAXJUMP2;
+		if (OnGround == false)
+		{
+			AddY += dropAddY;
+		}
+	}
+	else
+	{
+		for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
+		{
+			if (GetPosX() + GetWidht() / 2< map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth()/2)
+			{
+				X -= 2.0; Y += 2.0;
+			}
+			if (GetPosX() + GetWidht() / 2>= map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth() / 2)
+			{
+				X += 2.0; Y -= 2.0;
+			}
+		}
+	}
+	
 }
 
 bool PLAYER::CheckGameover()
@@ -109,7 +135,10 @@ bool PLAYER::CheckGameover()
 	}
 	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
 	{
-		if (false)
+		if (GetPosX() > map->m_hemisphere[r].GetPosX() - GetWidht()
+			&& GetPosX() < map->m_hemisphere[r].GetPosX() - map->m_hemisphere[r].GetSizeWidth()
+			&& GetPosY() > map->m_hemisphere[r].GetPosY() - GetHeight()
+			&& GetPosY() < map->m_hemisphere[r].GetPosY() - map->m_hemisphere[r].GetSizeHigh())
 		{
 			return true;
 		}
