@@ -209,6 +209,17 @@ void PLAYER::DoJump()
 	
 	for (int r = 0; r < map->GetNumObject(SPRING); r++)
 	{
+		int height = map->m_spring[r].GetSizeHigh();
+		int widht = map->m_spring[r].GetPosX() - (int)GetPosX();
+		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht() && OnGround&&widht>GetWidht())
+		{
+			AddY = 0;
+			AddY -= sqrt(2 * dropAddY*(height));
+			if (AddY <= -MAXJUMP)AddY = -MAXJUMP;
+		}
+	}
+	for (int r = 0; r < map->GetNumObject(SPRING); r++)
+	{
 		int height = map->m_spring[r].GetPosY() - ((int)Y + HEIGHT);
 		//オブジェクトの上底の高さとキャラクター画像の底辺の高さの差
 		//負であればキャラクター画像の底辺はオブジェクトの上底よりも下に表示されている
