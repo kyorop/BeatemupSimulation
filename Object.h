@@ -13,7 +13,7 @@ public:
 	int GetPosX(){ return m_pos_x; } //オブジェクトの左上のX座標を返す
 	int GetPosY(){ return m_pos_y; } //オブジェクトの左上のY座標を返す
 	KindObject GetObjectType(){ return m_kindobject; } //オブジェクトのタイプを返す
-	void SetObject(int posx, int posy, int sizex, int sizey);
+	void SetObject(int posx, int posy, int sizex = -1, int sizey = -1);
 
 	//以下はMapCreateで使用
 	virtual int GetDrawSizeWidth(){ return m_draw_size_x; } //オブジェクトの横のサイズを返す

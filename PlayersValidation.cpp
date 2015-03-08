@@ -2,7 +2,7 @@
 #include"PLAYER.h"
 #include "DxLib.h"
 
-void PlayersValidation::Validation()
+void PlayersValidation::Validation(PLAYER *player)
 {
 
 	DrawString(0, 16, "PLAYERSVALIDATION　（キー）：（上昇初速度）", GetColor(0, 0, 0));

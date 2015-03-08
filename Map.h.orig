@@ -49,7 +49,12 @@ private:
 	Map(const Map& rhs);
 	Map& operator=(const Map& rhs);
 
-	bool SetDraggedObject(KindObject type, int i);
+<<<<<<< HEAD
+	void SetDraggedObject(KindObject type, int i);
 	void GetHighestY(int x1, int x2, int* highest, Object** highestObject);
+=======
+	bool SetDraggedObject(KindObject type, int i);
+	int GetHighestY(int x1, int x2, int lowerY);
+>>>>>>> ca388afb96c9d52e66fdc0c614950de27555553a
 	Object* GetObj(KindObject type, const int i);
 };

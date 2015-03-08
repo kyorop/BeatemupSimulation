@@ -43,20 +43,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		ClearDrawScreen();
 
-		//DrawBox(0, 0, 640, 400, GetColor(255, 255, 255), TRUE);
-		//map->MakeObject(SQUARE, 200, 350, 50, 50);
+		//DrawBox(0, 0, 640, 300, GetColor(255, 255, 255), TRUE);
+		//map->MakeObject(SQUARE, 200, 250, 50, 50);
 		//map->Draw();
 		//if (CheckHitKey(KEY_INPUT_Q))
 		//{
 		//	validation.ValidationStart();
 		//	player.PlayerIni();//プレイヤーの初期化
 		//}
-		//if (validation.ValidationPlay()){ validation.Validation(); }
+		//if (validation.ValidationPlay()){ validation.Validation(&player); }
 		//else
 		//{
 		//	DrawString(0, 0, "Qキーを押すとPlayerの動作確認", GetColor(255, 255, 255));
 		//}
-//
+////
 //			
 //		
 //		mouse_flag = GetMouseInput() & MOUSE_INPUT_LEFT;

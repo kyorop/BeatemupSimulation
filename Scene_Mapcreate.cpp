@@ -4,10 +4,13 @@
 
 void Scene_Mapcreate::UpdateScene()
 {
-
-	if (CheckHitKey(KEY_INPUT_RETURN))
+	if (finish_flag)
 	{
-		sceneMrg->ChangeScene(ISceneChanger::SCENE_GAME);
+		if (CheckHitKey(KEY_INPUT_RETURN))
+		{
+			map->SetPosAll(); //位置を調整する
+			sceneMrg->ChangeScene(ISceneChanger::SCENE_GAME); //ゲーム画面へ
+		}
 	}
 
 }
@@ -51,12 +54,21 @@ Scene_Mapcreate::Scene_Mapcreate()
 		map->MakeObject(TRIANGLE, 10 + (640 * 4) / 5, itempos_y_lu + 18, object_size[TRIANGLE], object_size[TRIANGLE]);
 	}
 	h_banner = LoadGraph("./img/cppbanner.png");
+	finish_flag = FALSE;
 }
 
 void Scene_Mapcreate::Update()
 {
 	UpdateScene();
 	int result = 0;
+	if (numobjects_now[SQUARE] || numobjects_now[HEMISPHERE] || numobjects_now[SPRING] || numobjects_now[HOLE] || numobjects_now[TRIANGLE] || finish_flag ||map->m_mouse_updown)
+	{
+	}
+	else //全部のオブジェクトの残りが0になって、マウスが押されていない(つまり処理が終わった)時
+	{
+		finish_flag = TRUE;
+	}
+
 	if ((result = map->CreateUpdate()) != -1)
 	{
 		if (result >= 0)
@@ -126,6 +138,10 @@ void Scene_Mapcreate::Draw()
 		}
 	}
 	DrawGraph(0, 480 - 80, h_banner, FALSE);
+	if (finish_flag)
+	{
+		DrawFormatString(40, 320, GetColor(128, 0, 128), "Please, Enter!");
+	}
 }
 
 
