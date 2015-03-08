@@ -16,8 +16,8 @@ public:
 	void SetObject(int posx, int posy, int sizex, int sizey);
 
 	//以下はMapCreateで使用
-	int GetDrawSizeWidth(){ return m_draw_size_x; } //オブジェクトの横のサイズを返す
-	int GetDrawSizeHigh(){ return m_draw_size_y; } //オブジェクトの縦のサイズを返す
+	virtual int GetDrawSizeWidth(){ return m_draw_size_x; } //オブジェクトの横のサイズを返す
+	virtual int GetDrawSizeHigh(){ return m_draw_size_y; } //オブジェクトの縦のサイズを返す
 	int GetDrawPosX(){ return m_draw_pos_x; } //オブジェクトの左上のX座標を返す
 	int GetDrawPosY(){ return m_draw_pos_y; } //オブジェクトの左上のY座標を返す
 	void SetDrawSizeWidth(int x){ m_draw_size_x = x; }
@@ -34,7 +34,7 @@ public:
 	void ReminSize(int size_x, int size_y); //DrawSizeの縮小。size_yは実際の全画面のxのサイズ
 	void RemaxSize(); //DrawSizeの大きさと座標を元に戻す
 //	virtual void Draw()=0;
-private:
+protected:
 	int m_pos_x; //オブジェクトの左上のx座標
 	int m_pos_y;
 	int m_size_x;

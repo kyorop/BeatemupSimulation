@@ -36,7 +36,7 @@ Scene_Mapcreate::Scene_Mapcreate()
 	}
 	for (int i = 0; i < numobjects[HEMISPHERE]; i++)
 	{
-		map->MakeObject(HEMISPHERE, 10 + 640 / 5, itempos_y_lu + 18, object_size[HEMISPHERE], object_size[HEMISPHERE]);
+		map->MakeObject(HEMISPHERE, 10 + 640 / 5, itempos_y_lu + 18, object_size[HEMISPHERE], object_size[HEMISPHERE]/2);
 	}
 	for (int i = 0; i < numobjects[SPRING]; i++)
 	{
@@ -112,9 +112,11 @@ void Scene_Mapcreate::Update()
 
 void Scene_Mapcreate::Draw()
 {
-	DrawBox(0, 0, 640, 480, GetColor(153, 76, 0),TRUE); //背景黒だと分かりにくいのでとりあえず
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "This scene is Mapcreate");
+	DrawBox(0, 0, 640, 480, GetColor(0,0,43),TRUE); //背景黒だと分かりにくいのでとりあえず
 	DrawLine(0, itempos_y_lu, 640, itempos_y_lu + 2, GetColor(255, 0, 0), 4);
+	DrawBox(0, Map::small_stage_size_y, 640, itempos_y_lu, GetColor(153,76,0), true);
+	DrawLine(0, Map::small_stage_size_y, 640, Map::small_stage_size_y, GetColor(255, 0, 0));
+
 	map->CreateDraw();
 	for (int i = 0; i < TRIANGLE + 1; i++)
 	{
