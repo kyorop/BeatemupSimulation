@@ -51,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//	validation.ValidationStart();
 		//	player.PlayerIni();//プレイヤーの初期化
 		//}
-		//if (validation.ValidationPlay()){ validation.Validation(&player); }
+		//if (validation.ValidationPlay()){ validation.Validation(); }
 		//else
 		//{
 		//	DrawString(0, 0, "Qキーを押すとPlayerの動作確認", GetColor(255, 255, 255));
@@ -78,7 +78,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 //		{
 //			DrawFormatString(0, 80, GetColor(0, 128, 0), "test2：%d", map -> m_spring[1].GetPosX()); //使い方の例
 //		}
-		
+
 		sceneManager.Update();
 		sceneManager.Draw();
 

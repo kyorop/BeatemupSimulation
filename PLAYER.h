@@ -29,9 +29,8 @@ public:
 	void GraphNumChange();
 	void PlayerMove();
 	void DoJump();//キャラクターがオブジェクト近づいたらジャンプ
-	void PlyersUpdate();//プレイヤーキャラクターの動作のまとめ
 	void DoJump_a();//ジャンプ力による最高高度の確認
-
+	bool CheckGameover();//ゲームオーバーの条件を満たしているかどうかを返す
 	double GetAddY(){ return AddY; }
 };
 

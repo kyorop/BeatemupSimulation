@@ -258,41 +258,44 @@ int Map::CreateUpdate()
 	}
 	else if (m_mouse_updown) //離された時の処理
 	{
-		const KindObject droppedType = static_cast<KindObject>(nowchoose / 10);
-		const int droppedI = nowchoose - (nowchoose / 10) * 10;
-		Object* object = GetObj(droppedType, droppedI);
-		SetDraggedObject(droppedType, droppedI);
 		m_mouse_updown = FALSE;
-		if (mouse_y < small_stage_size_y) //アイテムボックスの中でない
+		if (nowchoose != -1) //オブジェクトが選択されてた場合だけ処理する
 		{
-			result = -1;
-		}
-		else
-		{
-			switch (nowchoose / 10) //座標を戻す
+			const KindObject droppedType = static_cast<KindObject>(nowchoose / 10);
+			const int droppedI = nowchoose - (nowchoose / 10) * 10;
+			Object* object = GetObj(droppedType, droppedI);
+			SetDraggedObject(droppedType, droppedI);
+			if (mouse_y < small_stage_size_y) //アイテムボックスの中でない
 			{
-			case SQUARE:
-				m_square[nowchoose - (nowchoose / 10) * 10].RemaxSize();
-				break;
-			case HEMISPHERE:
-				m_hemisphere[nowchoose - (nowchoose / 10) * 10].RemaxSize();
-				break;
-			case SPRING:
-				m_spring[nowchoose - (nowchoose / 10) * 10].RemaxSize();
-				break;
-			case HOLE:
-				m_hole[nowchoose - (nowchoose / 10) * 10].RemaxSize();
-				break;
-			case TRIANGLE:
-				m_triangle[nowchoose - (nowchoose / 10) * 10].RemaxSize();
-				break;
-			default:
-				break;
+				result = -1;
 			}
+			else
+			{
+				switch (nowchoose / 10) //座標を戻す
+				{
+				case SQUARE:
+					m_square[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+					break;
+				case HEMISPHERE:
+					m_hemisphere[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+					break;
+				case SPRING:
+					m_spring[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+					break;
+				case HOLE:
+					m_hole[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+					break;
+				case TRIANGLE:
+					m_triangle[nowchoose - (nowchoose / 10) * 10].RemaxSize();
+					break;
+				default:
+					break;
+				}
 
-			result = nowchoose * (-10) - 10; //特殊な処理
+				result = nowchoose * (-10) - 10; //特殊な処理
+			}
+			nowchoose = -1;
 		}
-		nowchoose = -1;
 	}
 	return result;
 }
