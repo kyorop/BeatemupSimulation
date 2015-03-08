@@ -12,6 +12,8 @@ class Scene_Gameover
 	const int gameoverY = 480 / 2 - 416 / 2-60;
 
 	void UpdateScene() override;
+	bool mouse_down;
+	int h_title;
 public:
 	void Initialize() override;
 	void Update() override;
