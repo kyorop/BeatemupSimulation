@@ -15,7 +15,7 @@ private:
 	int GraphChangeTime_Now;
 	bool OnGround;
 	double MaxY;
-	bool penaltyHemisphere;
+	bool touchHemisphere;
 	Map* map;
 
 public:
@@ -24,9 +24,10 @@ public:
 	double GetPosY(){ return Y; }
 	int GetHeight(){ return HEIGHT; }
 	int GetWidht(){ return WIDHT; }
+	double GetAddX(){ return AddX; }
 	void CheckOnGround();
 	void PlayerIni();
-	void PlayerDraw();
+	void PlayerDraw(int leftX);
 	void GraphNumChange();
 	void PlayerMove();
 	void DoJump();//キャラクターがオブジェクト近づいたらジャンプ

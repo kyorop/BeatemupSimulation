@@ -24,7 +24,7 @@ void PlayersValidation::Validation(PLAYER *player)
 	player->CheckOnGround();
 	player->PlayerMove();
 	player->GraphNumChange();
-	player->PlayerDraw();
+	/*player->PlayerDraw();*/
 }
 
 

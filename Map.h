@@ -41,7 +41,7 @@ private:
 	int m_numobjects[TRIANGLE + 1]; //各オブジェクトがいくつあるか。必ずTRIANGLEを最後に
 	const int stage_size_x = 1000 , stage_size_y = 480; //ステージのサイズ
 	template<typename tn, typename real_tn>void ReNew(tn &target, int num, int renum, real_tn type); //targetが指す配列をrenum個に拡張する
-
+	
 	char nowchoose; //現在マウスに選ばれているオブジェクトを記憶。具体的には16なら2種類目の7番目、31なら3種類目の2番目
 	// 生成やコピーを禁止する
 	Map();
