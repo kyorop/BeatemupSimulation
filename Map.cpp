@@ -332,6 +332,13 @@ bool Map::SetDraggedObject(KindObject type, int i)
 			return FALSE;
 		}
 
+		//落とし穴の上に置こうとしたらリセット
+		if (highestObj->GetObjectType() == HOLE)
+		{
+			object->ResetDrawPos();
+			return false;
+		}
+
 		if (highestObj->GetObjectType() == TRIANGLE)
 		{
 			const double hh = highestObj->GetDrawSizeHigh();
@@ -356,6 +363,10 @@ bool Map::SetDraggedObject(KindObject type, int i)
 				hDash = hh*(a / b);
 				highestY = hy + (hh - hDash);
 			}
+		}
+		else if (highestObj->GetObjectType() == HEMISPHERE)
+		{
+			
 		}
 
 		const int height = object->GetDrawSizeHigh();
