@@ -11,7 +11,7 @@
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 
-	SetMainWindowText("");
+	SetMainWindowText("ドキドキ横趣味");
 	ChangeWindowMode(TRUE);
 
 	if (DxLib_Init() == -1)
