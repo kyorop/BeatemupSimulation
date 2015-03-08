@@ -13,10 +13,9 @@ public:
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
-public:
 	void backGroundDraw();
 	int leftX;
 private:
 	int background;
-	
+	int h_ground;
 };
