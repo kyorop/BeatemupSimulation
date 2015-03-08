@@ -264,8 +264,7 @@ int Map::CreateUpdate()
 			const KindObject droppedType = static_cast<KindObject>(nowchoose / 10);
 			const int droppedI = nowchoose - (nowchoose / 10) * 10;
 			Object* object = GetObj(droppedType, droppedI);
-			SetDraggedObject(droppedType, droppedI);
-			if (mouse_y < small_stage_size_y) //アイテムボックスの中でない
+			if (mouse_y < small_stage_size_y && SetDraggedObject(droppedType, droppedI)) //アイテムボックスの中でないかつ何かと被さってない
 			{
 				result = -1;
 			}
@@ -301,7 +300,7 @@ int Map::CreateUpdate()
 }
 
 
-void Map::SetDraggedObject(KindObject type, int i)
+bool Map::SetDraggedObject(KindObject type, int i)
 {
 	const int x1 = GetObj(type, i)->GetDrawPosX();
 	const int x2 = x1 + GetObj(type, i)->GetDrawSizeWidth();
@@ -309,11 +308,11 @@ void Map::SetDraggedObject(KindObject type, int i)
 	const int highestY = GetHighestY(x1, x2, lowerY);
 	Object* object = GetObj(type, i);
 	if (object == nullptr)
-		return;
+		return FALSE;
 
 	if (lowerY > small_stage_size_y)
 	{
-		return;
+		return FALSE;
 	}
 	
 	if(highestY == small_stage_size_y)//下に何もオブジェクトが無い時
@@ -328,7 +327,7 @@ void Map::SetDraggedObject(KindObject type, int i)
 		if (type == HOLE)
 		{
 			object->ResetDrawPos();
-			return;
+			return FALSE;
 		}
 
 		const int height = object->GetDrawSizeHigh();
@@ -338,7 +337,9 @@ void Map::SetDraggedObject(KindObject type, int i)
 	else//すでにあるオブジェクトより下にドロップした時
 	{
 		object->ResetDrawPos();
+		return FALSE;
 	}
+	return TRUE;
 }
 
 int Map::GetHighestY(int x1, int x2, int lowerY)
@@ -383,5 +384,31 @@ Object* Map::GetObj(KindObject type, const int i)
 		return &m_triangle[i];
 	default: 
 		return nullptr;
+	}
+}
+
+
+void Map::SetPosAll()
+{
+	//全てのオブジェクトの位置調整
+	for (int i = 0; i < m_numobjects[SQUARE]; i++)
+	{
+		m_square[i].SetObject(m_square[i].GetDrawPosX() * stage_size_x / 640, m_square[i].GetDrawPosY() *stage_size_x / 300);
+	}
+	for (int i = 0; i < m_numobjects[HEMISPHERE]; i++)
+	{
+		m_hemisphere[i].SetObject(m_hemisphere[i].GetDrawPosX() * stage_size_x / 640, m_hemisphere[i].GetDrawPosY() *stage_size_x / 300);
+	}
+	for (int i = 0; i < m_numobjects[SPRING]; i++)
+	{
+		m_spring[i].SetObject(m_spring[i].GetDrawPosX() * stage_size_x / 640, m_spring[i].GetDrawPosY() *stage_size_x / 300);
+	}
+	for (int i = 0; i < m_numobjects[HOLE]; i++)
+	{
+		m_hole[i].SetObject(m_hole[i].GetDrawPosX() * stage_size_x / 640, m_hole[i].GetDrawPosY() *stage_size_x / 300);
+	}
+	for (int i = 0; i < m_numobjects[TRIANGLE]; i++)
+	{
+		m_triangle[i].SetObject(m_triangle[i].GetDrawPosX() * stage_size_x / 640, m_triangle[i].GetDrawPosY() *stage_size_x / 300);
 	}
 }

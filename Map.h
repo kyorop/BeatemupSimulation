@@ -30,6 +30,8 @@ public:
 	void Draw(); //実行時のDraw
 	int CreateUpdate(); //MapCreate内でのUpadate
 	static const int small_stage_size_y = 200;
+	void SetPosAll(); //縮小座標をゲーム座標に合わせます
+	bool m_mouse_updown; //マウスを押し始めたかどうか。TRUEならすでに押し始めている
 private:
 	int m_numobjects[TRIANGLE + 1]; //各オブジェクトがいくつあるか。必ずTRIANGLEを最後に
 	const int stage_size_x = 1000 , stage_size_y = 480; //ステージのサイズ
@@ -40,7 +42,6 @@ private:
 	int m_h_hemisphere;
 	int m_h_hole;
 	int m_h_spring;
-	bool m_mouse_updown; //マウスを押し始めたかどうか。TRUEならすでに押し始めている
 	char nowchoose; //現在マウスに選ばれているオブジェクトを記憶。具体的には16なら2種類目の7番目、31なら3種類目の2番目
 	// 生成やコピーを禁止する
 	Map();
@@ -48,7 +49,7 @@ private:
 	Map(const Map& rhs);
 	Map& operator=(const Map& rhs);
 
-	void SetDraggedObject(KindObject type, int i);
+	bool SetDraggedObject(KindObject type, int i);
 	int GetHighestY(int x1, int x2, int lowerY);
 	Object* GetObj(KindObject type, const int i);
 };
