@@ -16,7 +16,8 @@ void Scene_Game::Initialize()
 	player = new PLAYER();
 	player->PlayerIni();
 	map = Map::GetInstance();
-	background = LoadGraph("img/backimage.png");
+	background = LoadGraph("img/background.png");
+	h_ground = LoadGraph("img/ground.png");
 	leftX = 0;
 }
 void Scene_Game::Update()
@@ -79,4 +80,6 @@ void Scene_Game::backGroundDraw()
 {
 	DrawGraph(0-leftX, 0, background, FALSE);
 	DrawGraph(500 - leftX, 0, background, FALSE);
+	DrawGraph(0-leftX, 320, h_ground, false);
+	DrawGraph(500 - leftX, 320, h_ground, false);
 }
