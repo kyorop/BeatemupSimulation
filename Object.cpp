@@ -20,9 +20,14 @@ void Object::SetObject(int posx, int posy, int sizex, int sizey)
 	{
 		initDrawX1 = posx;
 		initDrawY1 = posy;
-		initDrawWidth = sizex;
-		initDrawHeight = sizey;
-
+		if (sizex > 0)
+		{
+			initDrawWidth = sizex;
+		}
+		if (sizey > 0)
+		{
+			initDrawHeight = sizey;
+		}
 		initialized = true;
 	}
 	m_draw_pos_x = m_pos_x = posx;
