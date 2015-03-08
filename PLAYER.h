@@ -29,7 +29,7 @@ public:
 	double GetAddX(){ return AddX; }
 	double GetAddY(){ return AddY; }
 	bool GetisFallen(){ return isFallen; }
-	void CheckOnGround();
+	bool CheckOnGround();
 	void PlayerIni();
 	void PlayerDraw(int leftX);
 	void GraphNumChange();

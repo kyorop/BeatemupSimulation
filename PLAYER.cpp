@@ -40,7 +40,7 @@ void PLAYER::PlayerDraw(int leftX)
 
 void PLAYER::GraphNumChange()
 {
-	if (OnGround)
+	if (CheckOnGround())
 	{
 		GraphChangeTime_Now--;
 	}
@@ -90,11 +90,11 @@ void PLAYER::PlayerMove()
 	if (Y < MaxY)MaxY = Y;
 	if (AddY>MAXJUMP2)AddY = MAXJUMP2;
 	if (AddY < -MAXJUMP2)AddY = -MAXJUMP2;
-	if (touchHemisphere&&OnGround)
+	if (touchHemisphere&&CheckOnGround())
 	{
 		AddX = 1.0;
 	}
-	if (OnGround == false)
+	if (CheckOnGround() == false)
 	{
 		AddY += dropAddY;
 	}
@@ -153,7 +153,7 @@ bool PLAYER::CheckGameover()
 }
 bool PLAYER::CheckGameClear(int ClearLineX)
 {
-	if (X > ClearLineX&&OnGround)
+	if (X > ClearLineX&&CheckOnGround())
 	{
 		return true;
 	}
@@ -166,7 +166,7 @@ void PLAYER::DoJump()
 	{
 		int height = map->m_square[r].GetSizeHigh();
 		int widht = map->m_square[r].GetPosX() - (int)GetPosX();
-		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht() && OnGround&&widht>GetWidht())
+		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht() && CheckOnGround()&&widht>GetWidht())
 		{
 			AddY = 0;
 			AddY -= sqrt(2 * dropAddY*(height));
@@ -177,7 +177,7 @@ void PLAYER::DoJump()
 	{
 		int height = map->m_triangle[r].GetSizeHigh() + GetHeight();
 		int widht = map->m_triangle[r].GetPosX() + map->m_triangle[r].GetDrawSizeWidth() / 2 - (int)GetPosX();
-		if (widht <= AddX*sqrt(2 * (height) / dropAddY) && OnGround&&widht>GetWidht())
+		if (widht <= AddX*sqrt(2 * (height) / dropAddY) && CheckOnGround()&&widht>GetWidht())
 		{
 			AddY = 0;
 			AddY -= sqrt(2 * dropAddY*(height));
@@ -189,7 +189,7 @@ void PLAYER::DoJump()
 	{
 		int height = map->m_hemisphere[r].GetSizeHigh() + GetHeight() / 2;
 		int widht = map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetDrawSizeWidth() / 2 - (int)GetPosX();
-		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht() / 2 && OnGround&&widht>GetWidht())
+		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht() / 2 && CheckOnGround()&&widht>GetWidht())
 		{
 			AddY = 0;
 			AddY -= sqrt(2 * dropAddY*(height));
@@ -201,7 +201,7 @@ void PLAYER::DoJump()
 	{
 		int height = map->m_spring[r].GetSizeHigh()+GetHeight();
 		int widht = map->m_spring[r].GetPosX() - (int)GetPosX();
-		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht()/3*2 && OnGround&&widht>GetWidht())
+		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht()/3*2 && CheckOnGround()&&widht>GetWidht())
 		{
 			AddY = 0;
 			AddY -= sqrt(2 * dropAddY*(height));
@@ -262,7 +262,7 @@ void PLAYER::DoJump_a()
 	}
 }
 
-void PLAYER::CheckOnGround()
+bool PLAYER::CheckOnGround()
 {
 	
 	for (int r = 0; r < map->GetNumObject(SQUARE); r++)
@@ -276,11 +276,12 @@ void PLAYER::CheckOnGround()
 		int widht2 = map->m_square[r].GetPosX() + map->m_square[r].GetSizeWidth() - (int)X;
 		//オブジェクトの右端とキャラクター画像の左端のX座標の差
 		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
-		if (widht1 <0 &&widht2>0&&height>=0)
+		if (widht1 <0 &&widht2>0&&height<=0)
 		{
 			if (AddY>0)
 			AddY = 0;
 			OnGround = true;
+			return OnGround;
 		}
 		else
 		{
@@ -319,6 +320,6 @@ void PLAYER::CheckOnGround()
 	{
 		OnGround = false;
 	}
-	
+	return OnGround;
 }
 
