@@ -10,6 +10,7 @@ public:
 	void Draw() override;
 	Scene_Start();
 private:
-	int h_title; //タイトル画像のハンドル
+	int h_background;
+	int h_ground;
 	int nowchoose; //0…Start、1…Exit
 };

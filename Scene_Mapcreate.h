@@ -21,6 +21,8 @@ private:
 	int h_banner;
 	int h_itemBox;
 	int h_startButton;
+	int h_background;
+	int h_ground;
 	const int stage_size_x = 1000, stage_size_y = 480; //ステージのサイズ
 	const int startButtonX = 320-176/2;
 	const int startButtonY = 350-51/2;
