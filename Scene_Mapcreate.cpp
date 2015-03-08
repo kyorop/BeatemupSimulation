@@ -23,7 +23,7 @@ Scene_Mapcreate::Scene_Mapcreate()
 	//とりあえずNORMAL?
 	numobjects_now[SQUARE] = numobjects[SQUARE] = 3;
 	numobjects_now[HEMISPHERE] = numobjects[HEMISPHERE] = 2;
-	numobjects_now[SPRING] = numobjects[SPRING] = 0;
+	numobjects_now[SPRING] = numobjects[SPRING] = 1;
 	numobjects_now[HOLE] = numobjects[HOLE] = 1;
 	numobjects_now[TRIANGLE] = numobjects[TRIANGLE] = 3;
 	object_size[SQUARE] = 64;
@@ -64,7 +64,7 @@ void Scene_Mapcreate::Update()
 	if (numobjects_now[SQUARE] || numobjects_now[HEMISPHERE] || numobjects_now[SPRING] || numobjects_now[HOLE] || numobjects_now[TRIANGLE] || finish_flag ||map->m_mouse_updown)
 	{
 	}
-	else //全部のオブジェクトの残りが0になって、マウスが押されていない(つまり処理が終わった時)時
+	else //全部のオブジェクトの残りが0になって、マウスが押されていない(つまり処理が終わった)時
 	{
 		finish_flag = TRUE;
 	}

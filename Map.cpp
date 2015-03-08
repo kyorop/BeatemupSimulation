@@ -1,6 +1,6 @@
 #include "Map.h"
 #include "CollisionHelper.h"
-
+#include <cmath>
 Map* Map::instance;
 
 Map::Map()
@@ -305,7 +305,9 @@ bool Map::SetDraggedObject(KindObject type, int i)
 	const int x1 = GetObj(type, i)->GetDrawPosX();
 	const int x2 = x1 + GetObj(type, i)->GetDrawSizeWidth();
 	const int lowerY = GetObj(type, i)->GetDrawPosY() + GetObj(type, i)->GetDrawSizeHigh();
-	const int highestY = GetHighestY(x1, x2, lowerY);
+	int highestY;
+	Object* highestObj = nullptr;
+	GetHighestY(x1, x2, &highestY, &highestObj);
 	Object* object = GetObj(type, i);
 	if (object == nullptr)
 		return FALSE;
@@ -314,7 +316,7 @@ bool Map::SetDraggedObject(KindObject type, int i)
 	{
 		return FALSE;
 	}
-	
+
 	if(highestY == small_stage_size_y)//下に何もオブジェクトが無い時
 	{
 		const int height = object->GetDrawSizeHigh();
@@ -330,6 +332,67 @@ bool Map::SetDraggedObject(KindObject type, int i)
 			return FALSE;
 		}
 
+		//落とし穴の上に置こうとしたらリセット
+		if (highestObj->GetObjectType() == HOLE || highestObj->GetObjectType() == SPRING)
+		{
+			object->ResetDrawPos();
+			return false;
+		}
+
+		if (highestObj->GetObjectType() == TRIANGLE)
+		{
+			const double hh = highestObj->GetDrawSizeHigh();
+			const double hw = highestObj->GetDrawSizeWidth();
+			const double hx = highestObj->GetDrawPosX();
+			const double hy = highestObj->GetDrawPosY();
+			const double hcx = hx + hw / 2;
+			const double dx = x1;
+			const double dx2 = x2;
+			double a;
+			const double b = hw/2;
+			int hDash;
+			if (dx2 < hcx)
+			{
+				a = dx2 - hx;
+				hDash = hh*(a / b);
+				highestY = hy + (hh - hDash);
+			}
+			else if (hcx < dx)
+			{
+				a = (hx + hw) - dx;
+				hDash = hh*(a / b);
+				highestY = hy + (hh - hDash);
+			}
+		}
+		else if (highestObj->GetObjectType() == HEMISPHERE)
+		{
+			const double hh = highestObj->GetDrawSizeHigh();
+			const double hw = highestObj->GetDrawSizeWidth();
+			const double hx = highestObj->GetDrawPosX();
+			const double hy = highestObj->GetDrawPosY();
+			const double hcx = hx + hw / 2;
+			const double dx = x1;
+			const double dx2 = x2;
+			double theta;
+			double a;
+			const double b = hw / 2;
+			int hDash;
+			if (dx2 < hcx)
+			{
+				a = hcx - dx2;
+				theta = acos(a / b);
+				hDash = b*cos(theta);
+				highestY = hy + (hh - hDash);
+			}
+			else if (hcx < dx)
+			{
+				a = dx - hcx;
+				theta = acos(a / b);
+				hDash = b*cos(theta);
+				highestY = hy + (hh - hDash);
+			}
+		}
+
 		const int height = object->GetDrawSizeHigh();
 		object->SetDrawPosY(highestY - height);
 		object->PutOnGround();
@@ -342,7 +405,7 @@ bool Map::SetDraggedObject(KindObject type, int i)
 	return TRUE;
 }
 
-int Map::GetHighestY(int x1, int x2, int lowerY)
+void Map::GetHighestY(int x1, int x2, int* highest, Object** highestObject)
 {
 	int highestY=small_stage_size_y;
 
@@ -359,13 +422,16 @@ int Map::GetHighestY(int x1, int x2, int lowerY)
 				if (CheckHitLine(x1, x2, doneX1, doneX2))
 				{
 					if (highestY > doneUpperY)
+					{
 						highestY = doneUpperY;
+						*highestObject = object;
+					}
 				}
 			}
 		}
 	}
 
-	return highestY;
+	*highest = highestY;
 }
 
 Object* Map::GetObj(KindObject type, const int i)
