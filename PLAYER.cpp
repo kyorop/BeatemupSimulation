@@ -19,6 +19,7 @@ void PLAYER::PlayerIni()
 	TimeMax = 20;
 	Time = TimeMax;
 	OnGround = false;
+	isFallen = false;
 	GraphChangeTime_Now = GraphChangeTime_Max;
 	LoadDivGraph("img/charchip.png", 3, 3, 1, 32, 48, Graph);
 	GetGraphSize(Graph[0], &WIDHT, &HEIGHT);
@@ -29,28 +30,10 @@ void PLAYER::PlayerIni()
 
 void PLAYER::PlayerDraw(int leftX)
 {
-	for (int r = 0; r < map->GetNumObject(HOLE); r++)
+	if (isFallen)
 	{
-		
-		int widht1 = map->m_hole[r].GetPosX() - (int)GetPosX();
-		//落とし穴の左端のX座標とキャラクター画像の左端のX座標の差
-		//負であればキャラクター画像の左端のX座標は落とし穴の左端のX座標よりも右側にある
-		int widht2 = map->m_hole[r].GetPosX()+map->m_hole[r].GetSizeWidth() - ((int)GetPosX()+GetWidht());
-		//落とし穴の右端のX座標とキャラクター画像の右端のX座標の差
-		//負であればキャラクター画像の右端のX座標は落とし穴の右端のX座標よりも右側にある
-		if (widht1<0&&widht2>0)
-		{
-			SetDrawArea(map->m_hole[r].GetPosX(), 0,
-				map->m_hole[r].GetPosX() + map->m_hole[r].GetSizeWidth(),
-				map->m_hole[r].GetPosY() + map->m_hole[r].GetSizeHigh()/3*2);
-			
-		}
+		SetDrawArea(X, Y, X + WIDHT, UNDERDRAWLINE);
 	}
-	if (Y >= UNDERDRAWLINE + 10 - HEIGHT)
-	{
-		SetDrawArea(0, 0, 640, UNDERDRAWLINE);
-	}
-
 	DrawGraph((int)X-leftX, (int)Y, Graph[GraphNum], TRUE);
 	SetDrawAreaFull();
 }
@@ -93,6 +76,13 @@ void PLAYER::PlayerMove()
 				AddX = -AddX;
 				touchHemisphere = true;
 			}
+		}
+	}
+	if (GetisFallen())
+	{
+		if (AddX != 0)
+		{
+			AddX = 0;
 		}
 	}
 	X += AddX;
@@ -155,7 +145,7 @@ bool PLAYER::CheckGameover()
 		}
 	}
 	
-	if (Y>368)//画面より下に下がったらゲームオーバー
+	if (Y>320)//画面より下に下がったらゲームオーバー
 	{
 		return true;
 	}
@@ -209,7 +199,7 @@ void PLAYER::DoJump()
 	
 	for (int r = 0; r < map->GetNumObject(SPRING); r++)
 	{
-		int height = map->m_spring[r].GetSizeHigh();
+		int height = map->m_spring[r].GetSizeHigh()+GetHeight();
 		int widht = map->m_spring[r].GetPosX() - (int)GetPosX();
 		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht() && OnGround&&widht>GetWidht())
 		{
@@ -285,12 +275,13 @@ void PLAYER::CheckOnGround()
 		int widht2 = map->m_square[r].GetPosX() + map->m_square[r].GetSizeWidth() - (int)X;
 		//オブジェクトの右端とキャラクター画像の左端のX座標の差
 		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
-		if (widht1 <0 &&widht2>0&&height<=0)
+		if (widht1 <0 &&widht2>0&&height>=0)
 		{
 			DrawString(UNDERDRAWLINE, 50, "TRUE", GetColor(0, 0, 0));
 			if (AddY>0)
 			AddY = 0;
 			OnGround = true;
+			break;
 		}
 		else
 		{
@@ -309,18 +300,15 @@ void PLAYER::CheckOnGround()
 		int height = map->m_hole[r].GetPosY() + map->m_hole[r].GetSizeHigh() / 2 - (int)GetPosY();
 		if (GetPosX() > map->m_hole[r].GetPosX() 
 			&& GetPosX() < map->m_hole[r].GetPosX() + map->m_hole[r].GetSizeWidth()
-			/*&& GetPosY() > map->m_hole[r].GetPosY() - GetHeight()
-			&& GetPosY() < map->m_hole[r].GetPosY() - map->m_hole[r].GetSizeHigh()*/)
+			&& GetPosY() + GetHeight() > UNDERDRAWLINE)
 		{
+			isFallen = true;
 			OnGround = false;
 		}
 	}
 	
-	if (Y >= UNDERDRAWLINE+10 - HEIGHT)
-	{
-		OnGround = false;
-	}
-	else if (Y >= UNDERDRAWLINE - HEIGHT)
+	
+	 if (Y >= UNDERDRAWLINE - HEIGHT&&isFallen==false)
 	{
 		OnGround = true;
 		if (AddY >= 0)
