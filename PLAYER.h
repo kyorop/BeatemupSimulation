@@ -18,6 +18,8 @@ private:
 	bool touchHemisphere;
 	Map* map;
 
+	bool isFallen;
+
 public:
 	double GetMaxY(){ return MaxY; }
 	double GetPosX(){ return X; }
@@ -26,6 +28,7 @@ public:
 	int GetWidht(){ return WIDHT; }
 	double GetAddX(){ return AddX; }
 	double GetAddY(){ return AddY; }
+	bool GetisFallen(){ return isFallen; }
 	void CheckOnGround();
 	void PlayerIni();
 	void PlayerDraw(int leftX);
