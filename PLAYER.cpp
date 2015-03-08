@@ -24,7 +24,7 @@ void PLAYER::PlayerIni()
 	LoadDivGraph("img/charchip.png", 3, 3, 1, 32, 48, Graph);
 	GetGraphSize(Graph[0], &WIDHT, &HEIGHT);
 	map = Map::GetInstance();
-	X = 0;	Y = UNDERDRAWLINE - HEIGHT;
+	X = -10;	Y = UNDERDRAWLINE - HEIGHT;
 	MaxY = Y;
 }
 
@@ -201,12 +201,13 @@ void PLAYER::DoJump()
 	{
 		int height = map->m_spring[r].GetSizeHigh()+GetHeight();
 		int widht = map->m_spring[r].GetPosX() - (int)GetPosX();
-		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht() && OnGround&&widht>GetWidht())
+		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht()/3*2 && OnGround&&widht>GetWidht())
 		{
 			AddY = 0;
 			AddY -= sqrt(2 * dropAddY*(height));
 			if (AddY <= -MAXJUMP)AddY = -MAXJUMP;
 		}
+		
 	}
 	for (int r = 0; r < map->GetNumObject(SPRING); r++)
 	{
@@ -221,7 +222,7 @@ void PLAYER::DoJump()
 		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
 		if (widht1 <0 && widht2>0 && height <= 0)
 		{
-			AddY = AddY*(-1.35);
+			AddY = AddY*(-1.5);
 			if (AddY < MAXJUMP2)AddY = -MAXJUMP2;
 		}
 	}
@@ -263,7 +264,7 @@ void PLAYER::DoJump_a()
 
 void PLAYER::CheckOnGround()
 {
-
+	
 	for (int r = 0; r < map->GetNumObject(SQUARE); r++)
 	{
 		int height = map->m_square[r].GetPosY()-((int)Y+HEIGHT);
@@ -277,11 +278,9 @@ void PLAYER::CheckOnGround()
 		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
 		if (widht1 <0 &&widht2>0&&height>=0)
 		{
-			DrawString(UNDERDRAWLINE, 50, "TRUE", GetColor(0, 0, 0));
 			if (AddY>0)
 			AddY = 0;
 			OnGround = true;
-			break;
 		}
 		else
 		{
@@ -298,8 +297,8 @@ void PLAYER::CheckOnGround()
 		//落とし穴の右端のX座標とキャラクター画像の右端のX座標の差
 		//負であればキャラクター画像の右端のX座標は落とし穴の右端のX座標よりも右側にある
 		int height = map->m_hole[r].GetPosY() + map->m_hole[r].GetSizeHigh() / 2 - (int)GetPosY();
-		if (GetPosX() > map->m_hole[r].GetPosX() 
-			&& GetPosX() < map->m_hole[r].GetPosX() + map->m_hole[r].GetSizeWidth()
+		if (GetPosX()> map->m_hole[r].GetPosX()+10 
+			&& GetPosX()+GetWidht()< map->m_hole[r].GetPosX() + map->m_hole[r].GetSizeWidth()-10
 			&& GetPosY() + GetHeight() > UNDERDRAWLINE)
 		{
 			isFallen = true;
@@ -307,8 +306,7 @@ void PLAYER::CheckOnGround()
 		}
 	}
 	
-	
-	 if (Y >= UNDERDRAWLINE - HEIGHT&&isFallen==false)
+	if (Y >= UNDERDRAWLINE - HEIGHT&&isFallen == false)
 	{
 		OnGround = true;
 		if (AddY >= 0)
@@ -320,6 +318,7 @@ void PLAYER::CheckOnGround()
 	else
 	{
 		OnGround = false;
-	}	
+	}
+	
 }
 
