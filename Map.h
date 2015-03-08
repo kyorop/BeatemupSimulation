@@ -49,6 +49,6 @@ private:
 	Map& operator=(const Map& rhs);
 
 	void SetDraggedObject(KindObject type, int i);
-	int GetHighestY(int x1, int x2, int lowerY);
+	void GetHighestY(int x1, int x2, int* highest, Object** highestObject);
 	Object* GetObj(KindObject type, const int i);
 };
