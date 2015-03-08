@@ -9,7 +9,7 @@ void Scene_Mapcreate::UpdateScene()
 		if (CheckHitKey(KEY_INPUT_RETURN))
 		{
 			map->SetPosAll(); //位置を調整する
-			sceneMrg->ChangeScene(ISceneChanger::SCENE_GAME); //ゲーム画面へ
+			sceneMrg->ChangeScene(ISceneChanger::SCENE_GAME); //ゲーム画面へ 
 		}
 	}
 
@@ -54,6 +54,8 @@ Scene_Mapcreate::Scene_Mapcreate()
 		map->MakeObject(TRIANGLE, 10 + (640 * 4) / 5, itempos_y_lu + 18, object_size[TRIANGLE], object_size[TRIANGLE]);
 	}
 	h_banner = LoadGraph("./img/cppbanner.png");
+	h_itemBox = LoadGraph("img/itembox.png");
+	h_startButton = LoadGraph("img/startbutton.png");
 	finish_flag = FALSE;
 }
 
@@ -124,10 +126,9 @@ void Scene_Mapcreate::Update()
 
 void Scene_Mapcreate::Draw()
 {
-	DrawBox(0, 0, 640, 480, GetColor(0,0,43),TRUE); //背景黒だと分かりにくいのでとりあえず
-	DrawLine(0, itempos_y_lu, 640, itempos_y_lu + 2, GetColor(255, 0, 0), 4);
-	DrawBox(0, Map::small_stage_size_y, 640, itempos_y_lu, GetColor(153,76,0), true);
-	DrawLine(0, Map::small_stage_size_y, 640, Map::small_stage_size_y, GetColor(255, 0, 0));
+	DrawBox(0, 0, 640, 480, GetColor(255, 255, 255), TRUE); //背景黒だと分かりにくいのでとりあえず
+	DrawBox(0, Map::small_stage_size_y, 640, itempos_y_lu, GetColor(153, 76, 0), true);
+	DrawGraph(0, itempos_y_lu, h_itemBox, true);
 
 	map->CreateDraw();
 	for (int i = 0; i < TRIANGLE + 1; i++)
@@ -140,7 +141,8 @@ void Scene_Mapcreate::Draw()
 	DrawGraph(0, 480 - 80, h_banner, FALSE);
 	if (finish_flag)
 	{
-		DrawFormatString(40, 320, GetColor(128, 0, 128), "Please, Enter!");
+//		DrawFormatString(40, 320, GetColor(128, 0, 128), "Please, Enter!");
+		DrawGraph(startButtonX, startButtonY, h_startButton, false);
 	}
 }
 

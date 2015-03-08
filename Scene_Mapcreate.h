@@ -19,6 +19,12 @@ private:
 	int numobjects_now[TRIANGLE + 1]; //各オブジェクトの残り
 	int object_size[TRIANGLE + 1]; //各オブジェクトの1辺の大きさ
 	int h_banner;
+	int h_itemBox;
+	int h_startButton;
 	const int stage_size_x = 1000, stage_size_y = 480; //ステージのサイズ
+	const int startButtonX = 320-176/2;
+	const int startButtonY = 350-51/2;
+	const int startButtonWidth = 176; 
+	const int startButtonHeight = 51;
 	bool finish_flag; //オブジェクトを置き終わったフラグ
 };
