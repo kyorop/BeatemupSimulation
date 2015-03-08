@@ -13,6 +13,7 @@ private:
 	int h_background;
 	int h_ground;
 	int nowchoose; //0…Start、1…Exit
+	int h_title;
 	bool startflag; //startが押されたフラグ
 	bool downmouse; //マウスが押されているフラグ
 	Map* map;
