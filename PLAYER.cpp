@@ -3,13 +3,10 @@
 #include"Map.h"
 #include<math.h>
 
-#define UNDERDRAWLINE 400
+#define UNDERDRAWLINE 300
 #define MAXJUMP 4.2
 #define MAXJUMP2 5.0
-//double PLAYER::GetPosX(){	return X;}
-//double PLAYER::GetPosY(){	return Y;}
-//int PLAYER::GetHeight(){	return HEIGHT;}
-//int PLAYER::GetWidht(){	return WIDHT;}
+
 
 
 void PLAYER::PlayerIni()
@@ -89,51 +86,39 @@ void PLAYER::PlayerMove()
 	{
 		AddY += dropAddY;
 	}
+}
+
+bool PLAYER::CheckGameover()
+{
 	for (int r = 0; r < map->GetNumObject(SQUARE); r++)
 	{
-		int height1 = map->m_square[r].GetPosY() - ((int)Y+HEIGHT);
-		int height2 = map->m_square[r].GetPosY()+map->m_square[r].GetSizeHigh() - (int)Y;
-		//オブジェクトの上底の高さとキャラクター画像の底辺の高さの差
-		//負であればキャラクター画像の底辺はオブジェクトの上底よりも下に表示されている
-		int widht1 = map->m_square[r].GetPosX() - ((int)X + WIDHT);
-		//オブジェクトの左端とキャラクター画像の右端のX座標の差
-		//負であればキャラクター画像の右端はオブジェクトの左端よりも右に表示されている
-		int widht2 = map->m_square[r].GetPosX() + map->m_square[r].GetSizeWidth() - (int)X;
-		//オブジェクトの右端とキャラクター画像の左端のX座標の差
-		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
-		if (widht1 <=0 && height2>0 && height1 <= 0&&widht2<=0)
+		if (GetPosX() > map->m_square[r].GetPosX() - GetWidht()
+			&& GetPosX() < map->m_square[r].GetPosX() - map->m_square[r].GetSizeWidth()
+			&& GetPosY() > map->m_square[r].GetPosY() - GetHeight()
+			&& GetPosY() < map->m_square[r].GetPosY() - map->m_square[r].GetSizeHigh())
 		{
-			X -= AddX;
+			return true;
 		}
 	}
-	for (int r = 0; r < map->GetNumObject(SPRING); r++)
+	for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
 	{
-		int height1 = map->m_spring[r].GetPosY() - ((int)Y + HEIGHT);
-		int height2 = map->m_spring[r].GetPosY() + map->m_spring[r].GetSizeHigh() - (int)Y;
-		//オブジェクトの上底の高さとキャラクター画像の底辺の高さの差
-		//負であればキャラクター画像の底辺はオブジェクトの上底よりも下に表示されている
-		int widht1 = map->m_spring[r].GetPosX() - ((int)X + WIDHT);
-		//オブジェクトの左端とキャラクター画像の右端のX座標の差
-		//負であればキャラクター画像の右端はオブジェクトの左端よりも右に表示されている
-		int widht2 = map->m_spring[r].GetPosX() + map->m_spring[r].GetSizeWidth() - (int)X;
-		//オブジェクトの右端とキャラクター画像の左端のX座標の差
-		//負であればキャラクター画像の左端はオブジェクトの右端よりも左に表示されている
-		if (widht1 <0 && height2>0 && height1 <= 0 && widht2<0)
+		if (false)
 		{
-			X -= AddX;
+			return true;
 		}
 	}
 	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
 	{
-		int Cx = X + WIDHT/2;
-		int Cy = Y + HEIGHT;
-		if (Cx > map->m_hemisphere[r].GetPosX()&&map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth() / 2>Cx)
+		if (false)
 		{
-			X -= AddX;
+			return true;
 		}
 	}
-
-
+	if (Y>640)//画面より下に下がったらゲームオーバー
+	{
+		return true;
+	}
+	return false;
 }
 
 void PLAYER::DoJump()
@@ -261,7 +246,10 @@ void PLAYER::CheckOnGround()
 		//落とし穴の右端のX座標とキャラクター画像の右端のX座標の差
 		//負であればキャラクター画像の右端のX座標は落とし穴の右端のX座標よりも右側にある
 		int height = map->m_hole[r].GetPosY() + map->m_hole[r].GetSizeHigh() / 2 - (int)GetPosY();
-		if (widht1<0 && widht2>0&&height<=GetHeight())
+		if (GetPosX() > map->m_hole[r].GetPosX() 
+			&& GetPosX() < map->m_hole[r].GetPosX() + map->m_hole[r].GetSizeWidth()
+			/*&& GetPosY() > map->m_hole[r].GetPosY() - GetHeight()
+			&& GetPosY() < map->m_hole[r].GetPosY() - map->m_hole[r].GetSizeHigh()*/)
 		{
 			OnGround = false;
 		}
@@ -286,10 +274,3 @@ void PLAYER::CheckOnGround()
 	}	
 }
 
-void PLAYER::PlyersUpdate()
-{
-	DoJump();
-	CheckOnGround();
-	GraphNumChange();
-	PlayerMove();
-}
