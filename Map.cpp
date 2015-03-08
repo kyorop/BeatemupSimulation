@@ -1,6 +1,6 @@
 #include "Map.h"
 #include "CollisionHelper.h"
-
+#include <cmath>
 Map* Map::instance;
 
 Map::Map()
@@ -366,7 +366,31 @@ bool Map::SetDraggedObject(KindObject type, int i)
 		}
 		else if (highestObj->GetObjectType() == HEMISPHERE)
 		{
-			
+			const double hh = highestObj->GetDrawSizeHigh();
+			const double hw = highestObj->GetDrawSizeWidth();
+			const double hx = highestObj->GetDrawPosX();
+			const double hy = highestObj->GetDrawPosY();
+			const double hcx = hx + hw / 2;
+			const double dx = x1;
+			const double dx2 = x2;
+			double theta;
+			double a;
+			const double b = hw / 2;
+			int hDash;
+			if (dx2 < hcx)
+			{
+				a = hcx - dx2;
+				theta = acos(a / b);
+				hDash = b*cos(theta);
+				highestY = hy + (hh - hDash);
+			}
+			else if (hcx < dx)
+			{
+				a = dx - hcx;
+				theta = acos(a / b);
+				hDash = b*cos(theta);
+				highestY = hy + (hh - hDash);
+			}
 		}
 
 		const int height = object->GetDrawSizeHigh();
