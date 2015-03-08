@@ -4,9 +4,15 @@
 
 void Scene_Mapcreate::UpdateScene()
 {
+	int mousex = 0, mousey = 0;
 	if (finish_flag)
 	{
-		if (CheckHitKey(KEY_INPUT_RETURN))
+		if (GetMouseInput()&MOUSE_INPUT_LEFT)
+		{
+			GetMousePoint(&mousex, &mousey);
+		}
+		if ((startButtonX <= mousex && startButtonX + startButtonWidth >= mousex) && 
+			(startButtonY <= mousey && startButtonY + startButtonHeight >= mousey))
 		{
 			map->SetPosAll(); //位置を調整する
 			sceneMrg->ChangeScene(ISceneChanger::SCENE_GAME); //ゲーム画面へ 
