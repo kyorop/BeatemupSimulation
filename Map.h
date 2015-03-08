@@ -39,6 +39,7 @@ public:
 	int m_h_spring;
 	void SetDifficulty(int d){ m_difficulty = d; }
 	int GetDifficulty(){ return m_difficulty; }
+	void DeleteObject();
 private:
 	int m_numobjects[TRIANGLE + 1]; //各オブジェクトがいくつあるか。必ずTRIANGLEを最後に
 	const int stage_size_x = 1000 , stage_size_y = 480; //ステージのサイズ
