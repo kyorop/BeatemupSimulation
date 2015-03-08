@@ -133,8 +133,17 @@ bool PLAYER::CheckGameover()
 		}
 	}
 	
-	
 	for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
+	{
+		if (GetPosX() + GetWidht() / 2> map->m_triangle[r].GetPosX() + map->m_triangle[r].GetDrawSizeWidth() / 7 * 3
+			&& GetPosX() + GetWidht() / 2 < map->m_triangle[r].GetPosX() + map->m_triangle[r].GetSizeWidth() / 7 * 4
+			&& GetPosY() + GetHeight() > map->m_triangle[r].GetPosY() + map->m_triangle[r].GetSizeHigh() / 5 * 2
+			&& GetPosY() + GetHeight() < map->m_triangle[r].GetPosY() + map->m_triangle[r].GetSizeHigh())
+		{
+			return true;
+		}
+	}
+	/*for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
 	{
 		if (GetPosX() > map->m_triangle[r].GetPosX() - GetWidht()
 			&& GetPosX() < map->m_triangle[r].GetPosX() - map->m_triangle[r].GetSizeWidth()
@@ -143,7 +152,7 @@ bool PLAYER::CheckGameover()
 		{
 			return true;
 		}
-	}
+	}*/
 	if (Y>368)//画面より下に下がったらゲームオーバー
 	{
 		return true;
@@ -174,6 +183,17 @@ void PLAYER::DoJump()
 	}
 	for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
 	{
+		int height = map->m_triangle[r].GetSizeHigh() + GetHeight();
+		int widht = map->m_triangle[r].GetPosX() + map->m_triangle[r].GetDrawSizeWidth() / 2 - (int)GetPosX();
+		if (widht <= AddX*sqrt(2 * (height) / dropAddY) && OnGround&&widht>GetWidht())
+		{
+			AddY = 0;
+			AddY -= sqrt(2 * dropAddY*(height));
+			if (AddY <= -MAXJUMP)AddY = -MAXJUMP;
+		}
+	}
+	/*for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
+	{
 		int height = map->m_triangle[r].GetSizeHigh()+GetHeight()/2;
 		int widht = map->m_triangle[r].GetPosX()+map->m_triangle[r].GetDrawSizeWidth()/2 - (int)GetPosX();
 		if (widht <= AddX*sqrt(2 * (height) / dropAddY) + GetWidht()/2 && OnGround&&widht>GetWidht())
@@ -182,7 +202,7 @@ void PLAYER::DoJump()
 			AddY -= sqrt(2 * dropAddY*(height));
 			if (AddY <= -MAXJUMP)AddY = -MAXJUMP;
 		}
-	}
+	}*/
 	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
 	{
 		int height = map->m_hemisphere[r].GetSizeHigh() + GetHeight() / 2;
