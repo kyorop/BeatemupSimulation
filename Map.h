@@ -37,6 +37,8 @@ public:
 	int m_h_hemisphere;
 	int m_h_hole;
 	int m_h_spring;
+	void SetDifficulty(int d){ m_difficulty = d; }
+	int GetDifficulty(){ return m_difficulty; }
 private:
 	int m_numobjects[TRIANGLE + 1]; //各オブジェクトがいくつあるか。必ずTRIANGLEを最後に
 	const int stage_size_x = 1000 , stage_size_y = 480; //ステージのサイズ
@@ -52,4 +54,5 @@ private:
 	bool SetDraggedObject(KindObject type, int i);
 	void GetHighestY(int x1, int x2, int* highest, Object** highestObject);
 	Object* GetObj(KindObject type, const int i);
+	int m_difficulty; //難易度。0…Easy,1…Normal,2…Difficult,3…Extra
 };
