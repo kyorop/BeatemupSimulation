@@ -18,7 +18,6 @@ void Scene_Mapcreate::UpdateScene()
 			sceneMrg->ChangeScene(ISceneChanger::SCENE_GAME); //ゲーム画面へ 
 		}
 	}
-
 }
 
 Scene_Mapcreate::Scene_Mapcreate()
@@ -62,6 +61,8 @@ Scene_Mapcreate::Scene_Mapcreate()
 	h_banner = LoadGraph("./img/cppbanner.png");
 	h_itemBox = LoadGraph("img/itembox.png");
 	h_startButton = LoadGraph("img/startbutton.png");
+	h_background = LoadGraph("img/background.png");
+	h_ground = LoadGraph("img/ground.png");
 	finish_flag = FALSE;
 }
 
@@ -132,8 +133,10 @@ void Scene_Mapcreate::Update()
 
 void Scene_Mapcreate::Draw()
 {
-	DrawBox(0, 0, 640, 480, GetColor(255, 255, 255), TRUE); //背景黒だと分かりにくいのでとりあえず
-	DrawBox(0, Map::small_stage_size_y, 640, itempos_y_lu, GetColor(153, 76, 0), true);
+//	DrawBox(0, 0, 640, 480, GetColor(255, 255, 255), TRUE); //背景黒だと分かりにくいのでとりあえず
+	DrawExtendGraph(0, 0, 640, Map::small_stage_size_y, h_background, false);
+//	DrawBox(0, Map::small_stage_size_y, 640, itempos_y_lu, GetColor(153, 76, 0), true);
+	DrawExtendGraph(0, Map::small_stage_size_y, 640, itempos_y_lu, h_ground, false);
 	DrawGraph(0, itempos_y_lu, h_itemBox, true);
 
 	map->CreateDraw();
