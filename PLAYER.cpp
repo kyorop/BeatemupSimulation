@@ -4,8 +4,8 @@
 #include<math.h>
 
 #define UNDERDRAWLINE 320
-#define MAXJUMP 4.2
-#define MAXJUMP2 5.0
+#define MAXJUMP 5
+#define MAXJUMP2 6
 #define PI 3.141592
 
 
@@ -144,7 +144,15 @@ bool PLAYER::CheckGameover()
 			return true;
 		}
 	}
-	if (Y>640)//画面より下に下がったらゲームオーバー
+	if (Y>368)//画面より下に下がったらゲームオーバー
+	{
+		return true;
+	}
+	return false;
+}
+bool PLAYER::CheckGameClear(int ClearLineX)
+{
+	if (X > ClearLineX&&OnGround)
 	{
 		return true;
 	}

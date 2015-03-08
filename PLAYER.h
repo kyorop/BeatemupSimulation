@@ -25,6 +25,7 @@ public:
 	int GetHeight(){ return HEIGHT; }
 	int GetWidht(){ return WIDHT; }
 	double GetAddX(){ return AddX; }
+	double GetAddY(){ return AddY; }
 	void CheckOnGround();
 	void PlayerIni();
 	void PlayerDraw(int leftX);
@@ -33,7 +34,7 @@ public:
 	void DoJump();//キャラクターがオブジェクト近づいたらジャンプ
 	void DoJump_a();//ジャンプ力による最高高度の確認
 	bool CheckGameover();//ゲームオーバーの条件を満たしているかどうかを返す
-	double GetAddY(){ return AddY; }
+	bool CheckGameClear(int ClearLineX);//ゲームクリアの条件を満たしているかを返す
 };
 
 #endif
