@@ -3,10 +3,6 @@
 
 void Scene_Start::UpdateScene()
 {
-	/*if (CheckHitKey(KEY_INPUT_RETURN))
-	{
-		sceneMrg->ChangeScene(ISceneChanger::SCENE_MAPCREATE);
-	}*/
 }
 
 void Scene_Start::Update()
@@ -37,7 +33,8 @@ void Scene_Start::Update()
 
 void Scene_Start::Draw()
 {
-	DrawGraph(0, 0, h_title, FALSE);
+	DrawExtendGraph(0, 0, 640, 360,h_background, false);
+	DrawExtendGraph(0, 360, 640, 480, h_ground, false);
 	DrawFormatString(205 - (nowchoose ? 0 : 20), 278, GetColor(0, 0, 0), "Start");
 	DrawFormatString(205 - (nowchoose ? 20 : 0), 302, GetColor(0, 0, 0), "Exit");
 }
@@ -45,6 +42,7 @@ void Scene_Start::Draw()
 
 Scene_Start::Scene_Start()
 {
-	h_title = LoadGraph("./img/title.png");
+	h_background = LoadGraph("img/background.png");
+	h_ground = LoadGraph("img/ground.png");
 	nowchoose = 0;
 }
