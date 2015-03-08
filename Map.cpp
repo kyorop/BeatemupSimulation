@@ -11,7 +11,7 @@ Map::Map()
 	}
 	SetTransColor(255, 255, 255); //”’‚ð“§‰ß‚·‚é‚æ‚¤‚É
 	m_h_square = LoadGraph("./img/square.png");
-	m_h_hemisphere = LoadGraph("./img/hemisphere.png");
+	m_h_hemisphere = LoadGraph("./img/hemisphere2.png");
 	m_h_hole = LoadGraph("./img/hole.png");
 	m_h_spring = LoadGraph("./img/spring.png");
 	m_h_triangle = LoadGraph("./img/triangle.png");
