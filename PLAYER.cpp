@@ -13,7 +13,7 @@ void PLAYER::PlayerIni()
 {
 	
 	AddX = 1; AddY = 0; dropAddY=0.12;
-	
+	penaltyHemisphere = false;
 	GraphNum = 1;
 	GraphChangeTime_Max = 80;
 	TimeMax = 20;
@@ -78,16 +78,23 @@ void PLAYER::PlayerMove()
 {
 	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
 	{
-		if (GetPosX() + GetWidht() / 2 > map->m_hemisphere[r].GetPosX()
-			&& GetPosX() + GetWidht() / 2< map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth()
-			&& GetPosY() + GetHeight() > map->m_hemisphere[r].GetPosY()
-			&& GetPosY() + GetHeight() < map->m_hemisphere[r].GetPosY() + map->m_hemisphere[r].GetSizeHigh())
+		double differenceX = (GetPosX() + GetWidht() / 2) - (map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth() / 2);
+		double differenceY = (GetPosY() + GetHeight()) - (map->m_hemisphere[r].GetPosY() + map->m_hemisphere[r].GetSizeHigh());
+		if (sqrt(differenceX*differenceX + differenceY*differenceY)<map->m_hemisphere[r].GetSizeHigh())
 		{
-			IrregularActions = true;
+			if (differenceX>0)
+			{
+				AddY = -2;
+			}
+			else
+			{
+				AddY = -2;
+				AddX = -AddX;
+				penaltyHemisphere = true;
+			}
+			
 		}
 	}
-	if (IrregularActions == false)
-	{
 		X += AddX; Y += AddY;
 		if (Y < MaxY)MaxY = Y;
 		if (AddY>MAXJUMP2)AddY = MAXJUMP2;
@@ -96,21 +103,8 @@ void PLAYER::PlayerMove()
 		{
 			AddY += dropAddY;
 		}
-	}
-	else
-	{
-		for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
-		{
-			if (GetPosX() + GetWidht() / 2< map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth()/2)
-			{
-				X -= 2.0; Y += 2.0;
-			}
-			if (GetPosX() + GetWidht() / 2>= map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth() / 2)
-			{
-				X += 2.0; Y -= 2.0;
-			}
-		}
-	}
+	
+	
 	
 }
 
@@ -133,12 +127,16 @@ bool PLAYER::CheckGameover()
 			return true;
 		}
 	}
-	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
+	if (penaltyHemisphere&&OnGround)
 	{
-		if (GetPosX() > map->m_hemisphere[r].GetPosX() - GetWidht()
-			&& GetPosX() < map->m_hemisphere[r].GetPosX() - map->m_hemisphere[r].GetSizeWidth()
-			&& GetPosY() > map->m_hemisphere[r].GetPosY() - GetHeight()
-			&& GetPosY() < map->m_hemisphere[r].GetPosY() - map->m_hemisphere[r].GetSizeHigh())
+		return true;
+	}
+	for (int r = 0; r < map->GetNumObject(TRIANGLE); r++)
+	{
+		if (GetPosX() > map->m_triangle[r].GetPosX() - GetWidht()
+			&& GetPosX() < map->m_triangle[r].GetPosX() - map->m_triangle[r].GetSizeWidth()
+			&& GetPosY() > map->m_triangle[r].GetPosY() - GetHeight()
+			&& GetPosY() < map->m_triangle[r].GetPosY() - map->m_triangle[r].GetSizeHigh())
 		{
 			return true;
 		}
