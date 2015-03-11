@@ -30,10 +30,7 @@ void PLAYER::PlayerIni()
 
 void PLAYER::PlayerDraw(int leftX)
 {
-	if (isFallen)
-	{
-		SetDrawArea(X, Y, X + WIDHT, UNDERDRAWLINE);
-	}
+	SetDrawArea(0, 0, 640, UNDERDRAWLINE);
 	DrawGraph((int)X-leftX, (int)Y, Graph[GraphNum], TRUE);
 	SetDrawAreaFull();
 }
@@ -60,6 +57,17 @@ void PLAYER::GraphNumChange()
 
 void PLAYER::PlayerMove()
 {
+	for (int r = 0; r < map->GetNumObject(HOLE); r++)
+	{
+
+		if (GetPosX()> map->m_hole[r].GetPosX() + 10
+			&& GetPosX()< map->m_hole[r].GetPosX() + map->m_hole[r].GetSizeWidth() - 10
+			&& GetPosY() + GetHeight() >= UNDERDRAWLINE)
+		{
+			isFallen = true;
+			OnGround = false;
+		}
+	}
 	for (int r = 0; r < map->GetNumObject(HEMISPHERE); r++)
 	{
 		double differenceX = (GetPosX() + GetWidht() / 2) - (map->m_hemisphere[r].GetPosX() + map->m_hemisphere[r].GetSizeWidth() / 2);
@@ -98,6 +106,7 @@ void PLAYER::PlayerMove()
 	{
 		AddY += dropAddY;
 	}
+	
 }
 
 bool PLAYER::CheckGameover()
@@ -288,24 +297,7 @@ bool PLAYER::CheckOnGround()
 			OnGround = false;
 		}
 	}
-	for (int r = 0; r < map->GetNumObject(HOLE); r++)
-	{
-
-		int widht1 = map->m_hole[r].GetPosX() - (int)GetPosX();
-		//落とし穴の左端のX座標とキャラクター画像の左端のX座標の差
-		//負であればキャラクター画像の左端のX座標は落とし穴の左端のX座標よりも右側にある
-		int widht2 = map->m_hole[r].GetPosX() + map->m_hole[r].GetSizeWidth() - ((int)GetPosX() + GetWidht());
-		//落とし穴の右端のX座標とキャラクター画像の右端のX座標の差
-		//負であればキャラクター画像の右端のX座標は落とし穴の右端のX座標よりも右側にある
-		int height = map->m_hole[r].GetPosY() + map->m_hole[r].GetSizeHigh() / 2 - (int)GetPosY();
-		if (GetPosX()> map->m_hole[r].GetPosX()+10 
-			&& GetPosX()+GetWidht()< map->m_hole[r].GetPosX() + map->m_hole[r].GetSizeWidth()-10
-			&& GetPosY() + GetHeight() > UNDERDRAWLINE)
-		{
-			isFallen = true;
-			OnGround = false;
-		}
-	}
+	
 	
 	if (Y >= UNDERDRAWLINE - HEIGHT&&isFallen == false)
 	{
