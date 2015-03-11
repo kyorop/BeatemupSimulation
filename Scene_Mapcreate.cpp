@@ -22,7 +22,8 @@ void Scene_Mapcreate::UpdateScene()
 	
 }
 
-Scene_Mapcreate::Scene_Mapcreate()
+
+void Scene_Mapcreate::Initialize()
 {
 
 	map = Map::GetInstance();
@@ -73,7 +74,7 @@ Scene_Mapcreate::Scene_Mapcreate()
 	}
 	for (int i = 0; i < numobjects[HEMISPHERE]; i++)
 	{
-		map->MakeObject(HEMISPHERE, 10 + 640 / 5, itempos_y_lu + 18, object_size[HEMISPHERE], object_size[HEMISPHERE]/2);
+		map->MakeObject(HEMISPHERE, 10 + 640 / 5, itempos_y_lu + 18, object_size[HEMISPHERE], object_size[HEMISPHERE] / 2);
 	}
 	for (int i = 0; i < numobjects[SPRING]; i++)
 	{
@@ -87,14 +88,18 @@ Scene_Mapcreate::Scene_Mapcreate()
 	{
 		map->MakeObject(TRIANGLE, 10 + (640 * 4) / 5, itempos_y_lu + 18, object_size[TRIANGLE], object_size[TRIANGLE]);
 	}
+	finish_flag = FALSE;
+	reset_flag = FALSE;
+}
+
+Scene_Mapcreate::Scene_Mapcreate()
+{
 	h_banner = LoadGraph("./img/cppbanner.png");
 	h_itemBox = LoadGraph("img/itembox.png");
 	h_startButton = LoadGraph("img/startbutton.png");
 	h_background = LoadGraph("img/background.png");
 	h_ground = LoadGraph("img/ground.png");
 	h_reset = LoadGraph("./img/resetbutton.png");
-	finish_flag = FALSE;
-	reset_flag = FALSE;
 }
 
 void Scene_Mapcreate::Update()

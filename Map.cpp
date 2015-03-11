@@ -478,3 +478,39 @@ void Map::SetPosAll()
 		m_triangle[i].SetObject(m_triangle[i].GetDrawPosX() * stage_size_x / 640, m_triangle[i].GetDrawPosY() *stage_size_y / 300);
 	}
 }
+
+
+void Map::DeleteObject()
+{
+	//全てのオブジェクトの消去
+	//for (int i = 0; i < m_numobjects[SQUARE]; i++)
+	{
+		delete[] m_square;
+		m_square = nullptr;
+		m_numobjects[SQUARE] = 0;
+	}
+	//for (int i = 0; i < m_numobjects[HEMISPHERE]; i++)
+	{
+		delete[] m_hemisphere;
+		m_hemisphere = nullptr;
+		m_numobjects[HEMISPHERE] = 0;
+	}
+	//for (int i = 0; i < m_numobjects[SPRING]; i++)
+	{
+		delete[] m_spring;
+		m_spring = nullptr;
+		m_numobjects[SPRING] = 0;
+	}
+	//for (int i = 0; i < m_numobjects[HOLE]; i++)
+	{
+		delete[] m_hole;
+		m_hole = nullptr;
+		m_numobjects[HOLE] = 0;
+	}
+	//for (int i = 0; i < m_numobjects[TRIANGLE]; i++)
+	{
+		delete[] m_triangle;
+		m_triangle = nullptr;
+		m_numobjects[TRIANGLE] = 0;
+	}
+}

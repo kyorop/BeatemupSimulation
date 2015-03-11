@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Scene_Base.h"
+#include"Map.h"
 
 class Scene_Gameover
 	:public Scene_Base
@@ -14,6 +15,7 @@ class Scene_Gameover
 	void UpdateScene() override;
 	bool mouse_down;
 	int h_title;
+	Map* map;
 public:
 	void Initialize() override;
 	void Update() override;
